@@ -52,7 +52,7 @@ class _QuotesState extends State<Quotes> {
                 'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below.',
                 style: TextStyle(
                     color: Color.fromARGB(255, 10, 10, 10),
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.normal,
                     fontSize: 22.0),
               ),
             ),
@@ -63,8 +63,20 @@ class _QuotesState extends State<Quotes> {
                 children: <Widget>[
                   const ListTile(
                     // leading: Icon(Icons.album),
-                    title: Text('Half Package'),
-                    subtitle: Text('60.00 ETB per month'),
+                    title: Text(
+                      'Half Package',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 10, 10, 10),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0),
+                    ),
+                    subtitle: Text(
+                      '60.00 ETB per month',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 10, 10, 10),
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20.0),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -93,8 +105,18 @@ class _QuotesState extends State<Quotes> {
                 children: <Widget>[
                   const ListTile(
                     // leading: Icon(Icons.album),
-                    title: Text('Full Package'),
-                    subtitle: Text('120.00 ETB per month'),
+                    title: Text('Full Package',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 10, 10, 10),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0)),
+                    subtitle: Text(
+                      '120.00 ETB per month',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 10, 10, 10),
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20.0),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

@@ -33,13 +33,13 @@ class _MobileInfoState extends State<MobileInfo> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
         // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
-        title: const Text('Quotes'),
+        title: const Text('Test Device'),
       ),
       body: Center(
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.all(20.0),
+              margin: const EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               child: const Text(
                 'Mobile Phone Insurance',
@@ -50,7 +50,7 @@ class _MobileInfoState extends State<MobileInfo> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(20.0, 15.0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(10.0, 15.0, 0, 0),
               alignment: Alignment.topLeft,
               child: const Text(
                 'Phone Insurance',
@@ -61,7 +61,7 @@ class _MobileInfoState extends State<MobileInfo> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
               alignment: Alignment.topLeft,
               child: const Text(
                 'Mobile Phone Insurance for Samsung to Iphone and Huawei to OnePlus - and all other brands in between - we cover all the major mobile phone handsets old, new and refurbished.',

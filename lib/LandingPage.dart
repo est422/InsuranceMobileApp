@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Register.dart';
+import 'Login.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -38,7 +39,22 @@ class LandingPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0),
+            padding: const EdgeInsets.all(10.0),
+            child: InkWell(
+                child: const Text(
+                  'Log In',
+                  style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromRGBO(109, 21, 23, 1)),
+                ),
+                onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Login()),
+                    )),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(10.0, 20.0, 0, 0),
             alignment: Alignment.topLeft,
             child: const Text(
               'Mobile Phone Insurance',
@@ -49,7 +65,7 @@ class LandingPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(20.0, 15.0, 0, 0),
+            margin: const EdgeInsets.fromLTRB(10.0, 15.0, 0, 0),
             alignment: Alignment.topLeft,
             child: const Text(
               'Phone Insurance',
@@ -60,7 +76,7 @@ class LandingPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 0),
+            margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
             alignment: Alignment.topLeft,
             child: const Text(
               'Mobile Phone Insurance for Samsung to Iphone and Huawei to OnePlus - and all other brands in between - we cover all the major mobile phone handsets old, new and refurbished.',
@@ -74,7 +90,7 @@ class LandingPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
                 child: const Text(
                   'Insure your Phone By',
                   style:
@@ -98,28 +114,6 @@ class LandingPage extends StatelessWidget {
               )
             ],
           ),
-          // const SizedBox(height: 20),
-          // Container(
-          //   margin: const EdgeInsets.all(40),
-          //   alignment: Alignment.center,
-          //   child: MaterialButton(
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(12),
-          //     ),
-          //     color: const Color.fromRGBO(109, 21, 23, 1),
-          //     // textColor: Colors.white,
-          //     onPressed: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(builder: (context) => const Register()),
-          //       );
-          //     },
-          //     child: const Text(
-          //       'Sign Up',
-          //       style: TextStyle(fontSize: 20.0),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

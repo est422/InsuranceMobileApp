@@ -3,10 +3,11 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:storage_info/storage_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:insurance_app/Quotes.dart';
+import 'Quotes.dart';
 
 class DeviceInfo extends StatefulWidget {
   const DeviceInfo({super.key});
@@ -25,6 +26,10 @@ class _DeviceInfoState extends State<DeviceInfo> {
   void initState() {
     super.initState();
     initPlatformState();
+  }
+
+  Future<double> _getSpace() async {
+    return await StorageInfo.getStorageTotalSpaceInGB;
   }
 
   Future<void> initPlatformState() async {
@@ -65,16 +70,16 @@ class _DeviceInfoState extends State<DeviceInfo> {
     return <String, dynamic>{
       // 'version.securityPatch': build.version.securityPatch,
       // 'version.sdkInt': build.version.sdkInt,
-      'version.release': build.version.release,
+      // 'version.release': build.version.release,
       // 'version.previewSdkInt': build.version.previewSdkInt,
       // 'version.incremental': build.version.incremental,
       // 'version.codename': build.version.codename,
       // 'version.baseOS': build.version.baseOS,
-      // 'board': build.board,
+      'board': build.board,
       // 'bootloader': build.bootloader,
-      // 'brand': build.brand,
+      'brand': build.brand,
       'device': build.device,
-      // 'display': build.display,
+      'display': build.display,
       // 'fingerprint': build.fingerprint,
       'hardware': build.hardware,
       // 'host': build.host,
@@ -253,6 +258,34 @@ class _DeviceInfoState extends State<DeviceInfo> {
                 },
               ).toList(),
             ),
+            FutureBuilder(
+                future: _getSpace(),
+                builder: (context, snapshot) {
+                  // print(snapshot.error);
+                  if (snapshot.hasData) {
+                    return Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.fromLTRB(40.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        'Internal Storage Space: \t ${snapshot.data} GB',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Container(
+                        alignment: Alignment.centerLeft,
+                        padding:
+                            const EdgeInsets.fromLTRB(40.0, 20.0, 0.0, 0.0),
+                        child: const Text(
+                          "Loading",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ));
+                  }
+                }),
             Container(
               alignment: Alignment.bottomCenter,
               margin: const EdgeInsets.all(80),
@@ -269,7 +302,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                   );
                 },
                 child: const Text(
-                  'Get quotes',
+                  'Get A Quote',
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
@@ -278,38 +311,5 @@ class _DeviceInfoState extends State<DeviceInfo> {
         ),
       ),
     );
-    // Column(
-    //   children: [
-    //     ListView(
-    //       scrollDirection: Axis.horizontal,
-    //       children: _deviceData.keys.map(
-    //         (String property) {
-    //           return Row(
-    //             children: <Widget>[
-    //               Container(
-    //                 // padding: const EdgeInsets.all(10.0),
-    //                 child: Text(
-    //                   property,
-    //                   style: const TextStyle(
-    //                       // fontWeight: FontWeight.bold,
-    //                       ),
-    //                 ),
-    //               ),
-    //               // Expanded(
-    //               Container(
-    //                 //   // padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-    //                 child: Text(
-    //                   '${_deviceData[property]}',
-    //                   //     // maxLines: 10,
-    //                   //     // overflow: TextOverflow.ellipsis,
-    //                 ),
-    //               ),
-    //             ],
-    //           );
-    //         },
-    //       ).toList(),
-    //     )
-    //   ],
-    // );
   }
 }
