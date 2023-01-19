@@ -265,9 +265,9 @@ class _DeviceInfoState extends State<DeviceInfo> {
                   if (snapshot.hasData) {
                     return Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.fromLTRB(40.0, 20.0, 0.0, 0.0),
+                      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 0.0, 0.0),
                       child: Text(
-                        'Internal Storage Space: \t ${snapshot.data} GB',
+                        'Internal Storage Space: ${snapshot.data} GB',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'TestDevice.dart';
+
 class Quotes extends StatefulWidget {
   const Quotes({super.key});
 
@@ -87,9 +89,16 @@ class _QuotesState extends State<Quotes> {
                         ),
                         color: const Color.fromRGBO(109, 21, 23, 1),
                         // textColor: Colors.white,
-                        onPressed: _launchUrl,
+                        // onPressed: _launchUrl,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TestDevice()),
+                          );
+                        },
                         child: const Text(
-                          'YenePay',
+                          'Get Started',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                       ),
@@ -127,9 +136,16 @@ class _QuotesState extends State<Quotes> {
                         ),
                         color: const Color.fromRGBO(109, 21, 23, 1),
                         // textColor: Colors.white,
-                        onPressed: _launchUrl,
+                        // onPressed: _launchUrl,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TestDevice()),
+                          );
+                        },
                         child: const Text(
-                          'YenePay',
+                          'Get Started',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                       ),

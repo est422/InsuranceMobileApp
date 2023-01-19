@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+// import 'package:flutter_sms/flutter_sms.dart';
+import 'package:otp/otp.dart';
 
 import 'package:flutter/material.dart';
+import 'package:insurance_app/Login.dart';
+import 'package:insurance_app/VerifyNumber.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
-
-import 'Login.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -17,8 +19,12 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
+  final code = OTP.generateTOTPCodeString(
+      'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -29,6 +35,7 @@ class _RegisterState extends State<Register> {
   late String password;
   late String confirmPassword;
   late String phone;
+  final List<String> smsNumber = [];
 
   String? validateMobile(String? value) {
     if (value!.length != 10) {
@@ -64,38 +71,35 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        final http.Response response = await http.post(
-            Uri.parse(
-                'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
-            // 'https://localhost:8000/api/user/create'),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode(
-              {
+    try {
+      if (_formKey.currentState!.validate()) {
+        final code = OTP.generateTOTPCodeString(
+            'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
+        smsNumber.add(phone.toString());
+        // String sendResult = await sendSMS(
+        //         message: code, recipients: smsNumber, sendDirect: true)
+        //     .catchError((err) {
+        //   // ignore: avoid_print
+        //   print(err);
+        // });
+        // ignore: avoid_print
+        // print(sendResult);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const VerifyNumber(),
+              settings: RouteSettings(arguments: {
                 "firstName": firstName,
                 "lastName": lastName,
+                "phone": phone,
                 "email": email,
                 "password": password,
-                "phone": phone
-              },
-            ));
-        if (response.statusCode == 200) {
-          // ignore: use_build_context_synchronously
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Login()),
-          );
-        } else {
-          throw Exception('User creation failed!');
-          // print(response);
-        }
-      } catch (e) {
-        // ignore: avoid_print
-        print(e);
+                "code": code
+              })),
+        );
       }
+    } catch (e) {
+      throw e;
     }
   }
 
@@ -130,7 +134,7 @@ class _RegisterState extends State<Register> {
               TextFormField(
                 // obscureText: true,
                 validator: validateName,
-                controller: _nameController,
+                controller: _firstNameController,
                 keyboardType: TextInputType.visiblePassword,
                 onChanged: (value) {
                   firstName = value;
@@ -153,7 +157,7 @@ class _RegisterState extends State<Register> {
               TextFormField(
                 // obscureText: true,
                 validator: validateName,
-                controller: _nameController,
+                controller: _lastNameController,
                 keyboardType: TextInputType.visiblePassword,
                 onChanged: (value) {
                   lastName = value;
@@ -177,7 +181,7 @@ class _RegisterState extends State<Register> {
                 // obscureText: true,
                 validator: validateMobile,
                 controller: _phoneNumberController,
-                keyboardType: TextInputType.visiblePassword,
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
                   phone = value;
                 },
@@ -200,6 +204,7 @@ class _RegisterState extends State<Register> {
                 // obscureText: true,
                 // textAlignVertical: TextAlignVertical.center,
                 keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
                 onChanged: (value) {
                   email = value;
                 },
@@ -278,8 +283,8 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(10.0),
-                child: InkWell(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
                     child: const Text(
                       'Log In',
                       style: TextStyle(
@@ -288,11 +293,11 @@ class _RegisterState extends State<Register> {
                           color: const Color.fromRGBO(109, 21, 23, 1)),
                     ),
                     onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()),
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Login(),
                         )),
-              )
+                  ))
             ],
           ),
         )),
