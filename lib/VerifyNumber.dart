@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:insurance_app/UserProfile.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 import 'Login.dart';
@@ -108,13 +109,13 @@ class _VerifyNumberState extends State<VerifyNumber> {
                   final http.Response response = await http.post(
                       Uri.parse(
                           'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
-                      // 'https://localhost:8000/api/user/create'),
+                      // 'http://localhost:7000/api/user/create'),
                       headers: {
                         'Content-Type': 'application/json',
                       },
                       body: jsonEncode(
                         {
-                          "name": firstName,
+                          "firstName": firstName,
                           "lastName": lastName,
                           "email": email,
                           "password": password,
@@ -126,7 +127,15 @@ class _VerifyNumberState extends State<VerifyNumber> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MobileInfo()),
+                          builder: (context) => const UserProfile(),
+                          settings: RouteSettings(arguments: {
+                            "firstName": firstName,
+                            "lastName": lastName,
+                            "phone": phone,
+                            "email": email,
+                            // "password": password,
+                            // "code": code
+                          })),
                     );
                   } else {
                     throw Exception('User creation failed!');
