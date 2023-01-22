@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:insurance_app/AboutUs.dart';
+import 'package:insurance_app/ContactUs.dart';
+import 'package:insurance_app/Policy.dart';
+import 'package:insurance_app/Register.dart';
 import 'mainSection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'LandingPage.dart';
@@ -42,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
         endDrawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
-            children: const <Widget>[
-              DrawerHeader(
+            children: <Widget>[
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.white,
                 ),
@@ -55,25 +59,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              ListTile(
+              const ListTile(
                 // leading: Icon(Icons.message),
                 title: Text('Home'),
               ),
               ListTile(
                 // leading: Icon(Icons.account_circle),
-                title: Text('About Us'),
+                title: const Text('About Us'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutUs()),
+                ),
               ),
               ListTile(
                 // leading: Icon(Icons.settings),
-                title: Text('Policy'),
+                title: const Text('Policy'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Policy()),
+                ),
               ),
               ListTile(
                 // leading: Icon(Icons.settings),
-                title: Text('Contact Us'),
+                title: const Text('Contact Us'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ContactUs()),
+                ),
               ),
               ListTile(
                 // leading: Icon(Icons.settings),
-                title: Text('Sign Up'),
+                title: const Text('Sign Up'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Register()),
+                ),
               ),
             ],
           ),

@@ -35,7 +35,7 @@ class _MobileInfoState extends State<MobileInfo> {
         // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: const Text('Test Device'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(

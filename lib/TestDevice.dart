@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'package:insurance_app/CameraTest.dart';
+
 import 'package:insurance_app/Quotes.dart';
 import 'package:insurance_app/VerifyDevice.dart';
 import 'VerifyDevice.dart';
@@ -13,9 +16,30 @@ class TestDevice extends StatefulWidget {
 }
 
 class _TestDeviceState extends State<TestDevice> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+  late final List<CameraDescription> camera;
+
+  Future<void> cameraCheck() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // controller = CameraController(CameraDescription camera);
+    camera = await availableCameras();
+    print(camera);
+    _controller = CameraController(camera[0], ResolutionPreset.max);
+  }
+
   @override
   void initState() {
     super.initState();
+    cameraCheck();
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed.
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,7 +65,7 @@ class _TestDeviceState extends State<TestDevice> {
               ),
             ),
             Container(
-              color: Color.fromARGB(255, 204, 202, 202),
+              color: const Color.fromARGB(255, 204, 202, 202),
               padding: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: Column(
@@ -62,28 +86,26 @@ class _TestDeviceState extends State<TestDevice> {
               ),
             ),
             Container(
-              color: Color.fromARGB(255, 204, 202, 202),
+              color: const Color.fromARGB(255, 204, 202, 202),
               padding: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: Column(
                 children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.vibration, size: 50.0),
-                        // Text('Vibration'),
-                        SizedBox(width: 15),
-                        Icon(Icons.speaker, size: 50.0),
-                        // Text('Speaker'),
-                        SizedBox(width: 15),
-                        Icon(Icons.camera, size: 50.0),
-                        // Text('Front Camera')
-                      ]),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Icon(Icons.vibration, size: 50.0),
+                    // Text('Vibration'),
+                    const SizedBox(width: 15),
+                    const Icon(Icons.speaker, size: 50.0),
+                    // Text('Speaker'),
+                    const SizedBox(width: 15),
+                    CamerTest(camera: camera[0]),
+                    // Text('Front Camera')
+                  ]),
                 ],
               ),
             ),
             Container(
-              color: Color.fromARGB(255, 204, 202, 202),
+              color: const Color.fromARGB(255, 204, 202, 202),
               padding: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: Column(
