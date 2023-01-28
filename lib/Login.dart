@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:insurance_app/Category.dart';
+import 'package:insurance_app/Register.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'MobileInfo.dart';
 
 class Login extends StatefulWidget {
@@ -21,6 +23,11 @@ class _LoginState extends State<Login> {
   // final _auth = FirebaseAuth.instance;
   late String phone;
   late String password;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   String? validateMobile(String? value) {
     if (value!.length != 10) {
@@ -55,7 +62,7 @@ class _LoginState extends State<Login> {
         if (response.statusCode == 200) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MobileInfo()),
+            MaterialPageRoute(builder: (context) => const Category()),
           );
         } else {
           throw Exception('User login failed!');
@@ -75,71 +82,107 @@ class _LoginState extends State<Login> {
         iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
       ),
-      body: Form(
-        key: _formKey,
-        child: Container(
-          padding: const EdgeInsets.all(40.0),
-          child: Column(
-            children: <Widget>[
-              // const SizedBox(height: 40),
-              TextFormField(
-                // obscureText: true,
-                validator: validateMobile,
-                controller: _phoneNumberController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  phone = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Mobile',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            padding: const EdgeInsets.all(40.0),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
+                  child: const Text(
+                    'Welcome',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                obscureText: true,
-                validator: validatePassword,
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                const SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                  child: const Text(
+                    'Login to your account',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              MaterialButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 20),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validateMobile,
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    phone = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Mobile',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
+                  ),
                 ),
-                color: const Color.fromRGBO(109, 21, 23, 1),
-                // textColor: Colors.white,
-                onPressed: _submit,
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  validator: validatePassword,
+                  controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
+                  ),
                 ),
-              ),
-            ],
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  color: const Color.fromRGBO(109, 21, 23, 1),
+                  // textColor: Colors.white,
+                  onPressed: _submit,
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                ),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      child: const Text(
+                        'Create an account',
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromRGBO(109, 21, 23, 1)),
+                      ),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Register(),
+                          )),
+                    ))
+              ],
+            ),
           ),
         ),
       ),

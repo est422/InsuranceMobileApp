@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:insurance_app/BottomNavigation.dart';
 // import 'package:flutter_sms/flutter_sms.dart';
 import 'package:otp/otp.dart';
 
@@ -31,11 +32,12 @@ class _RegisterState extends State<Register> {
   // final _auth = FirebaseAuth.instance;
   late String firstName;
   late String lastName;
-  late String email;
+  late String email = "";
   late String password;
   late String confirmPassword;
   late String phone;
-  final List<String> smsNumber = [];
+  late bool policy = false;
+  late List<String> smsNumber = [];
 
   String? validateMobile(String? value) {
     if (value!.length != 10) {
@@ -104,6 +106,11 @@ class _RegisterState extends State<Register> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -111,196 +118,244 @@ class _RegisterState extends State<Register> {
         // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: const Text('Register'),
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-            child: Container(
-          padding: const EdgeInsets.all(20.0),
-          alignment: Alignment.center,
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text('Welcome User \nSign up to join'),
-                  SizedBox(width: 30),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(
-                        "assets/images/testimonials-placeholder.png"),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                validator: validateName,
-                controller: _firstNameController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  firstName = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'First Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            alignment: Alignment.center,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text('Welcome User \nSign up to join'),
+                    SizedBox(width: 30),
+                    CircleAvatar(
+                      backgroundImage: AssetImage(
+                          "assets/images/testimonials-placeholder.png"),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validateName,
+                  controller: _firstNameController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'First Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                validator: validateName,
-                controller: _lastNameController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  lastName = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Last Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validateName,
+                  controller: _lastNameController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Last Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                validator: validateMobile,
-                controller: _phoneNumberController,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  phone = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Mobile',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validateMobile,
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    phone = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Mobile',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                // textAlignVertical: TextAlignVertical.center,
-                keyboardType: TextInputType.emailAddress,
-                controller: _emailController,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Email (Optional)',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  // textAlignVertical: TextAlignVertical.center,
+                  keyboardType: TextInputType.emailAddress,
+                  controller: _emailController,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Email (Optional)',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // contentPadding: EdgeInsets.all(30),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // contentPadding: EdgeInsets.all(30),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                validator: validatePassword,
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validatePassword,
+                  controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                // obscureText: true,
-                validator: validateConfirmPassword,
-                controller: _confirmPasswordController,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  confirmPassword = value;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Confirm Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+                const SizedBox(height: 10),
+                TextFormField(
+                  // obscureText: true,
+                  validator: validateConfirmPassword,
+                  controller: _confirmPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  onChanged: (value) {
+                    confirmPassword = value;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.solid,
-                    ),
+                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
-                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-              ),
-              const SizedBox(height: 10),
-              MaterialButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                color: const Color.fromRGBO(109, 21, 23, 1),
-                // textColor: Colors.white,
-                onPressed: _submit,
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.all(10.0),
-                  child: InkWell(
-                    child: const Text(
-                      'Log In',
-                      style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromRGBO(109, 21, 23, 1)),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: policy,
+                      onChanged: (value) {
+                        policy = true;
+                      },
                     ),
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Login(),
-                        )),
-                  ))
-            ],
+                    const Text('aggree to terms and poicy'),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  color: const Color.fromRGBO(109, 21, 23, 1),
+                  // textColor: Colors.white,
+                  onPressed: _submit,
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                ),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      child: const Text(
+                        'Log In',
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromRGBO(109, 21, 23, 1)),
+                      ),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          )),
+                    ))
+              ],
+            ),
           ),
-        )),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                top: BorderSide(
+                    color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white.withOpacity(.60),
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
+          onTap: (value) {
+            // Respond to item press.
+          },
+          items: [
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset41@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset42@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset43@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset40@2x.png'),
+            ),
+          ],
+        ),
       ),
     );
   }

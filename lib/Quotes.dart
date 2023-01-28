@@ -29,12 +29,13 @@ class _QuotesState extends State<Quotes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
-          // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
-          title: const Text('Quotes'),
-        ),
-        body: Column(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
+        // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
+        title: const Text('Quotes'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Container(
               margin: const EdgeInsets.fromLTRB(10.0, 20.0, 0, 0),
@@ -51,7 +52,7 @@ class _QuotesState extends State<Quotes> {
               margin: const EdgeInsets.fromLTRB(10.0, 15.0, 0, 0),
               alignment: Alignment.topLeft,
               child: const Text(
-                'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below.',
+                'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below. \n Please choose your suitable payment plan',
                 style: TextStyle(
                     color: Color.fromARGB(255, 10, 10, 10),
                     fontWeight: FontWeight.normal,
@@ -156,6 +157,44 @@ class _QuotesState extends State<Quotes> {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                top: BorderSide(
+                    color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white.withOpacity(.60),
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
+          onTap: (value) {
+            // Respond to item press.
+          },
+          items: [
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset41@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset42@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset43@2x.png'),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: Image.asset('assets/icons/Asset40@2x.png'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
