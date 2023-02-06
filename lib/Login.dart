@@ -23,6 +23,7 @@ class _LoginState extends State<Login> {
   // final _auth = FirebaseAuth.instance;
   late String phone;
   late String password;
+  late bool isLoading = false;
 
   @override
   void initState() {
@@ -60,6 +61,10 @@ class _LoginState extends State<Login> {
           }),
         );
         if (response.statusCode == 200) {
+          setState(() {
+            isLoading = false;
+          });
+          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const Category()),
@@ -88,6 +93,8 @@ class _LoginState extends State<Login> {
           child: Container(
             padding: const EdgeInsets.all(40.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   alignment: Alignment.topLeft,
@@ -153,13 +160,18 @@ class _LoginState extends State<Login> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 ),
+                const SizedBox(height: 15),
                 MaterialButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   color: const Color.fromRGBO(109, 21, 23, 1),
                   // textColor: Colors.white,
-                  onPressed: _submit,
+                  onPressed: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+                  },
                   child: const Text(
                     'Login',
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -180,7 +192,20 @@ class _LoginState extends State<Login> {
                           MaterialPageRoute(
                             builder: (context) => const Register(),
                           )),
-                    ))
+                    )),
+                // Loading
+                // Positioned(
+                isLoading
+                    ? Container(
+                        // color: Colors.white.withOpacity(0.8),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                              // valueColor: Color.,
+                              ),
+                        ),
+                      )
+                    : Container(),
+                // ),
               ],
             ),
           ),

@@ -22,6 +22,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
       TextEditingController();
 
   late String verificationCode;
+  late bool isLoading = false;
   // late List<String> phone = [];
 
   // String? validateVerificationCode(String? value) {
@@ -45,6 +46,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
     final phone = user["phone"];
     final email = user["email"];
     final password = user["password"];
+    final price = user["price"];
     final code = user["code"];
 
     return Scaffold(
@@ -58,7 +60,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
               child: Text(
                 'We have sent your verification code to \n Your Phone: $phone',
                 style: const TextStyle(
@@ -67,7 +69,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
             ),
             const SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
               child: Text(
                 'Sample generated verification code to: \t $code',
                 style: const TextStyle(
@@ -77,7 +79,7 @@ class _VerifyNumberState extends State<VerifyNumber> {
             const SizedBox(height: 10),
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
               child: TextFormField(
                 // obscureText: true,
                 // validator: validateVerificationCode,
@@ -110,6 +112,9 @@ class _VerifyNumberState extends State<VerifyNumber> {
               // textColor: Colors.white,
               onPressed: () async {
                 try {
+                  setState(() {
+                    isLoading = true;
+                  });
                   final http.Response response = await http.post(
                       Uri.parse(
                           'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
@@ -155,6 +160,16 @@ class _VerifyNumberState extends State<VerifyNumber> {
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
             ),
+            isLoading
+                ? Container(
+                    // color: Colors.white.withOpacity(0.8),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                          // valueColor: Color.,
+                          ),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

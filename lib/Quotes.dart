@@ -64,73 +64,36 @@ class _QuotesState extends State<Quotes> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const ListTile(
-                    // leading: Icon(Icons.album),
-                    title: Text(
-                      'Half Package',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 10, 10, 10),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0),
-                    ),
-                    subtitle: Text(
-                      '60.00 ETB per month',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 10, 10, 10),
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20.0),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        color: const Color.fromRGBO(109, 21, 23, 1),
-                        // textColor: Colors.white,
-                        // onPressed: _launchUrl,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TestDevice()),
-                          );
-                        },
-                        child: const Text(
-                          'Get Started',
-                          style: TextStyle(color: Colors.white, fontSize: 20.0),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    // leading: Icon(Icons.album),
-                    title: Text('Full Package',
+                  // const ListTile(
+                  //   // leading: Icon(Icons.album),
+                  //   title: Text(
+                  //     'Half Package',
+                  //     style: TextStyle(
+                  //         color: Color.fromARGB(255, 10, 10, 10),
+                  //         fontWeight: FontWeight.bold,
+                  //         fontSize: 24.0),
+                  //   ),
+                  //   subtitle: Text(
+                  //     '60.00 ETB per month',
+                  //     style: TextStyle(
+                  //         color: Color.fromARGB(255, 10, 10, 10),
+                  //         fontWeight: FontWeight.normal,
+                  //         fontSize: 20.0),
+                  //   ),
+                  // ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Text('SELECT YOUR EXCESS ',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 10, 10, 10),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0)),
-                    subtitle: Text(
-                      '120.00 ETB per month',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 10, 10, 10),
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20.0),
-                    ),
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black)),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      const Icon(Icons.monetization_on, size: 50.0),
                       MaterialButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -146,16 +109,209 @@ class _QuotesState extends State<Quotes> {
                           );
                         },
                         child: const Text(
-                          'Get Started',
+                          '25',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                       ),
                       const SizedBox(width: 8),
+                      const Icon(Icons.monetization_on, size: 50.0),
+                      MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        color: const Color.fromRGBO(109, 21, 23, 1),
+                        // textColor: Colors.white,
+                        // onPressed: _launchUrl,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TestDevice()),
+                          );
+                        },
+                        child: const Text(
+                          '50',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                      ),
                     ],
                   ),
+                  Container(
+                    child: const Text('CHOOSE YOUR POLICY TERM ',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black)),
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              child: const Text('MONTHLY',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white)),
+                            ),
+                            Container(
+                              child: const Text('60.00',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white)),
+                            ),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              color: const Color.fromRGBO(109, 21, 23, 1),
+                              // textColor: Colors.white,
+                              // onPressed: _launchUrl,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const TestDevice()),
+                                );
+                              },
+                              child: const Text(
+                                'Continue',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              child: const Text('ANNUAL',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white)),
+                            ),
+                            Container(
+                              child: const Text('120.00',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white)),
+                            ),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              color: const Color.fromRGBO(109, 21, 23, 1),
+                              // textColor: Colors.white,
+                              // onPressed: _launchUrl,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const TestDevice()),
+                                );
+                              },
+                              child: const Text(
+                                'Continue',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  Container(
+                    child: const Text('WHATS COVERED',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white)),
+                  ),
+                  Column(
+                    children: [
+                      Row(children: [
+                        const Icon(Icons.check_circle),
+                        Container(
+                          child: Text('Accidental Damage'),
+                        ),
+                      ]),
+                      Row(children: [
+                        const Icon(Icons.check_circle),
+                        Container(
+                          child: Text('Mechanical Breakdown'),
+                        ),
+                      ]),
+                      Row(children: [
+                        const Icon(Icons.check_circle),
+                        Container(
+                          child: Text('Malicious Damage'),
+                        ),
+                      ]),
+                      Row(children: [
+                        const Icon(Icons.check_circle),
+                        Container(
+                          child: Text('Liquid Damage'),
+                        )
+                      ])
+                    ],
+                  )
                 ],
               ),
             ),
+            // Card(
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       const ListTile(
+            //         // leading: Icon(Icons.album),
+            //         title: Text('Full Package',
+            //             style: TextStyle(
+            //                 color: Color.fromARGB(255, 10, 10, 10),
+            //                 fontWeight: FontWeight.bold,
+            //                 fontSize: 24.0)),
+            //         subtitle: Text(
+            //           '120.00 ETB per month',
+            //           style: TextStyle(
+            //               color: Color.fromARGB(255, 10, 10, 10),
+            //               fontWeight: FontWeight.normal,
+            //               fontSize: 20.0),
+            //         ),
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.end,
+            //         children: <Widget>[
+            //           MaterialButton(
+            //             shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(12),
+            //             ),
+            //             color: const Color.fromRGBO(109, 21, 23, 1),
+            //             // textColor: Colors.white,
+            //             // onPressed: _launchUrl,
+            //             onPressed: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) => const TestDevice()),
+            //               );
+            //             },
+            //             child: const Text(
+            //               'Get Started',
+            //               style: TextStyle(color: Colors.white, fontSize: 20.0),
+            //             ),
+            //           ),
+            //           const SizedBox(width: 8),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

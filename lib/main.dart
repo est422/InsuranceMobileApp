@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/Quotes.dart';
+import 'package:insurance_app/TestDevice.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -51,8 +53,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _storage = const FlutterSecureStorage();
-  late int selectedPage;
-  late final PageController _pageController;
   // ignore: prefer_typing_uninitialized_variables
   late final auth;
   // ignore: non_constant_identifier_names
@@ -62,6 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // final _auth = FirebaseAuth.instance;
   late String phone;
   late String password;
+  late int selectedPage;
+  late final PageController _pageController;
 
   String? validateMobile(String? value) {
     if (value!.length != 10) {
@@ -95,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
         );
         if (response.statusCode == 200) {
+          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const Category()),
@@ -159,6 +162,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
   IOSOptions _getIOSOptions() =>
       const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+
+  final List<Widget> _pages = [
+    Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/images/home_insurance_slider3.jpg"),
+            fit: BoxFit.cover),
+      ),
+      child: const Text('Get Insured, Lead a Sustinable Life!'),
+    ),
+    Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/images/home_insurance_slider4.jpg"),
+            fit: BoxFit.cover),
+      ),
+      child: const Text('Insure your Mobile Device!'),
+    ),
+    Container(
+      decoration: const BoxDecoration(
+          // image: DecorationImage(
+          //     image: AssetImage("assets/images/home_insurance_slider4.jpg"),
+          //     fit: BoxFit.cover),
+          ),
+      child: const Text('Sign Up and Get Started!'),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -238,249 +268,72 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // body: SingleChildScrollView(
-      //   // child: SafeArea(
-      //   child: SafeArea(
-      //     child: Column(
-      //       children: [
-      //         Expanded(
-      //           child: PageView(
+      // body: Quotes(),
+      body: const LandingPage(),
+      // body: SafeArea(
+      //   child: Column(
+      //     children: [
+      //       Expanded(
+      //         child: PageView(
       //             controller: _pageController,
       //             onPageChanged: (page) {
       //               setState(() {
       //                 selectedPage = page;
       //               });
       //             },
-      //             children: List.generate(pageCount, (index) {
-      //               if (index == 2) {
-      //                 return Form(
-      //                   key: _formKey,
-      //                   child: Container(
-      //                     padding: const EdgeInsets.all(40.0),
-      //                     child: Column(
-      //                       children: <Widget>[
-      //                         // const SizedBox(height: 40),
-      //                         TextFormField(
-      //                           // obscureText: true,
-      //                           validator: validateMobile,
-      //                           controller: _phoneNumberController,
-      //                           keyboardType: TextInputType.visiblePassword,
-      //                           onChanged: (value) {
-      //                             phone = value;
-      //                           },
-      //                           decoration: const InputDecoration(
-      //                             labelText: 'Mobile',
-      //                             border: OutlineInputBorder(
-      //                               borderRadius: BorderRadius.all(
-      //                                 Radius.circular(10.0),
-      //                               ),
-      //                               borderSide: BorderSide(
-      //                                 width: 0,
-      //                                 style: BorderStyle.solid,
-      //                               ),
-      //                             ),
-      //                             // errorText: _wrongPassword ? _passwordText : null,
-      //                           ),
-      //                         ),
-      //                         const SizedBox(height: 10),
-      //                         TextFormField(
-      //                           obscureText: true,
-      //                           validator: validatePassword,
-      //                           controller: _passwordController,
-      //                           keyboardType: TextInputType.visiblePassword,
-      //                           onChanged: (value) {
-      //                             password = value;
-      //                           },
-      //                           decoration: const InputDecoration(
-      //                             labelText: 'Password',
-      //                             border: OutlineInputBorder(
-      //                               borderRadius: BorderRadius.all(
-      //                                 Radius.circular(10.0),
-      //                               ),
-      //                               borderSide: BorderSide(
-      //                                 width: 0,
-      //                                 style: BorderStyle.solid,
-      //                               ),
-      //                             ),
-      //                             // errorText: _wrongPassword ? _passwordText : null,
-      //                           ),
-      //                         ),
-      //                         MaterialButton(
-      //                           shape: RoundedRectangleBorder(
-      //                             borderRadius: BorderRadius.circular(12),
-      //                           ),
-      //                           color: const Color.fromRGBO(109, 21, 23, 1),
-      //                           // textColor: Colors.white,
-      //                           onPressed: _submit,
-      //                           child: const Text(
-      //                             'Login',
-      //                             style: TextStyle(
-      //                                 color: Colors.white, fontSize: 20.0),
-      //                           ),
-      //                         ),
-      //                         // Container(
-      //                         //     padding: const EdgeInsets.all(10.0),
-      //                         //     child: InkWell(
-      //                         //       child: const Text(
-      //                         //         'Create an account',
-      //                         //         style: TextStyle(
-      //                         //             fontSize: 24.0,
-      //                         //             fontWeight: FontWeight.bold,
-      //                         //             color: const Color.fromRGBO(
-      //                         //                 109, 21, 23, 1)),
-      //                         //       ),
-      //                         //       onTap: () => Navigator.push(
-      //                         //           context,
-      //                         //           MaterialPageRoute(
-      //                         //             builder: (context) =>
-      //                         //                 const Register(),
-      //                         //           )),
-      //                         //     ))
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 );
-      //               } else {
-      //                 return Container(
-      //                   child: Center(
-      //                     child: Text('Page $index'),
-      //                   ),
-      //                 );
-      //               }
-      //             }),
-      //           ),
+      //             // children: List.generate(pageCount, (index) {
+      //             //   return Container(
+      //             //     child: Center(
+      //             //       child: Text('Page $index'),
+      //             //     ),
+      //             //   );
+      //             // }),
+      //             children: <Widget>[
+      //               Container(
+      //                 decoration: const BoxDecoration(
+      //                   image: DecorationImage(
+      //                       image: AssetImage(
+      //                           "assets/images/home_insurance_slider3.jpg"),
+      //                       fit: BoxFit.cover),
+      //                 ),
+      //                 child: const Text('Get Insured, Lead a Sustinable Life!'),
+      //               ),
+      //               Container(
+      //                 decoration: const BoxDecoration(
+      //                   image: DecorationImage(
+      //                       image: AssetImage(
+      //                           "assets/images/home_insurance_slider4.jpg"),
+      //                       fit: BoxFit.cover),
+      //                 ),
+      //                 child: const Text('Insure your Mobile Device!'),
+      //               ),
+      //               Container(
+      //                 // decoration: const BoxDecoration(
+      //                 // image: DecorationImage(
+      //                 //     image: AssetImage("assets/images/home_insurance_slider4.jpg"),
+      //                 //     fit: BoxFit.cover),
+      //                 // ),
+      //                 child: const Text('Sign Up and Get Started!'),
+      //               ),
+      //             ]),
+      //       ),
+      //       Padding(
+      //         padding: const EdgeInsets.symmetric(horizontal: 24),
+      //         child: PageViewDotIndicator(
+      //           currentItem: selectedPage,
+      //           count: pageCount,
+      //           unselectedColor: Colors.black26,
+      //           selectedColor: Color.fromRGBO(109, 21, 23, 1),
+      //           duration: Duration(milliseconds: 200),
+      //           boxShape: BoxShape.circle,
       //         ),
-      //         Padding(
-      //           padding: const EdgeInsets.symmetric(horizontal: 24),
-      //           child: PageViewDotIndicator(
-      //             currentItem: selectedPage,
-      //             count: pageCount,
-      //             unselectedColor: Colors.white,
-      //             selectedColor: Colors.black26,
-      //             duration: Duration(milliseconds: 200),
-      //             boxShape: BoxShape.circle,
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           height: 16,
-      //         ),
-      //       ],
-      //     ),
+      //       ),
+      //       SizedBox(
+      //         height: 16,
+      //       ),
+      //     ],
       //   ),
       // ),
-      // ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Container(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
-                    child: const Text(
-                      'Welcome',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                    child: const Text(
-                      'Login to your account',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    // obscureText: true,
-                    validator: validateMobile,
-                    controller: _phoneNumberController,
-                    keyboardType: TextInputType.visiblePassword,
-                    onChanged: (value) {
-                      phone = value;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Mobile',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      // errorText: _wrongPassword ? _passwordText : null,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    obscureText: true,
-                    validator: validatePassword,
-                    controller: _passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      // errorText: _wrongPassword ? _passwordText : null,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    color: const Color.fromRGBO(109, 21, 23, 1),
-                    // textColor: Colors.white,
-                    onPressed: _submit,
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    ),
-                  ),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: InkWell(
-                        child: const Text(
-                          'Create an account',
-                          style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(109, 21, 23, 1)),
-                        ),
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Register(),
-                            )),
-                      ))
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

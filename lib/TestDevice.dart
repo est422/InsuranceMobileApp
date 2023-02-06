@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-// import 'package:camera/camera.dart';
-// import 'package:insurance_app/CameraTest.dart';
+import 'package:camera/camera.dart';
+import 'package:insurance_app/CameraTest.dart';
 
 import 'package:insurance_app/Quotes.dart';
 import 'package:insurance_app/VerifyDevice.dart';
 import 'VerifyDevice.dart';
 
 class TestDevice extends StatefulWidget {
-  const TestDevice({super.key});
+  const TestDevice({
+    super.key,
+  });
 
   @override
   State<TestDevice> createState() {
@@ -18,24 +20,24 @@ class TestDevice extends StatefulWidget {
 class _TestDeviceState extends State<TestDevice> {
   // late CameraController _controller;
   // late Future<void> _initializeControllerFuture;
-  // late final List<CameraDescription> cameras;
-  // ignore: prefer_typing_uninitialized_variables
+  // late List<CameraDescription> cameras;
+  //ignore: prefer_typing_uninitialized_variables
   // late final cameras;
+  // late Future<List<CameraDescription>> camera = availableCameras();
 
-  // Future<void> cameraCheck() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+//   Future<CameraDescription> cameraCheck() async {
+//     WidgetsFlutterBinding.ensureInitialized();
 
-  // cameras = await availableCameras();
-  // _controller = CameraController(cameras[0], ResolutionPreset.medium);
-  // _initializeControllerFuture = _controller.initialize();
-  // print(camera);
-  // _controller = CameraController(camera[0], ResolutionPreset.max);
-  // }
+// // Obtain a list of the available cameras on the device.
+//     final CameraDescription cameras =
+//         (await availableCameras()) as CameraDescription;
+//     return cameras;
+//   }
 
   @override
   void initState() {
     super.initState();
-    // cameraCheck();
+    // camera = cameraCheck() as Future<List<CameraDescription>>;
   }
 
   @override
@@ -47,6 +49,7 @@ class _TestDeviceState extends State<TestDevice> {
 
   @override
   Widget build(BuildContext context) {
+    // late Future<List<CameraDescription>> camera = cameraCheck();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
@@ -103,15 +106,15 @@ class _TestDeviceState extends State<TestDevice> {
                             children: <Widget>[
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Icon(Icons.vibration, size: 50.0),
                                     // Text('Vibration'),
                                     SizedBox(width: 15),
                                     Icon(Icons.speaker, size: 50.0),
                                     // Text('Speaker'),
                                     SizedBox(width: 15),
-                                    Icon(Icons.camera, size: 50.0),
-                                    // CamerTest(camera: cameras[0]),
+                                    // Icon(Icons.camera, size: 50.0),
+                                    CamerTest(),
                                     // Text('Front Camera')
                                   ]),
                             ],

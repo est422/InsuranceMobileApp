@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
       'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  // final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -35,17 +35,17 @@ class _RegisterState extends State<Register> {
   late String email = "";
   late String password;
   late String confirmPassword;
-  late String phone;
+  late String? phone;
   late bool policy = false;
   late List<String> smsNumber = [];
 
-  String? validateMobile(String? value) {
-    if (value!.length != 10) {
-      return 'Mobile Number must be of 10 digit';
-    } else {
-      return null;
-    }
-  }
+  // String? validateMobile(String? value) {
+  //   if (value!.length != 10) {
+  //     return 'Mobile Number must be of 10 digit';
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   String? validateName(String? value) {
     if (value!.length < 3) {
@@ -72,38 +72,39 @@ class _RegisterState extends State<Register> {
     return null;
   }
 
-  Future<void> _submit() async {
-    try {
-      if (_formKey.currentState!.validate()) {
-        final code = OTP.generateTOTPCodeString(
-            'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
-        smsNumber.add(phone.toString());
-        // String sendResult = await sendSMS(
-        //         message: code, recipients: smsNumber, sendDirect: true)
-        //     .catchError((err) {
-        //   // ignore: avoid_print
-        //   print(err);
-        // });
-        // ignore: avoid_print
-        // print(sendResult);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const VerifyNumber(),
-              settings: RouteSettings(arguments: {
-                "firstName": firstName,
-                "lastName": lastName,
-                "phone": phone,
-                "email": email,
-                "password": password,
-                "code": code
-              })),
-        );
-      }
-    } catch (e) {
-      throw e;
-    }
-  }
+  // Future<void> _submit() async {
+  //   try {
+  //     if (_formKey.currentState!.validate()) {
+  //       final code = OTP.generateTOTPCodeString(
+  //           'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
+  //       smsNumber.add(phone.toString());
+  //       // String sendResult = await sendSMS(
+  //       //         message: code, recipients: smsNumber, sendDirect: true)
+  //       //     .catchError((err) {
+  //       //   // ignore: avoid_print
+  //       //   print(err);
+  //       // });
+  //       // ignore: avoid_print
+  //       // print(sendResult);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) => const VerifyNumber(),
+  //             settings: RouteSettings(arguments: {
+  //               "firstName": firstName,
+  //               "lastName": lastName,
+  //               "phone": phone,
+  //               "email": email,
+  //               "password": password,
+  //               "price": price,
+  //               "code": code
+  //             })),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
 
   @override
   void initState() {
@@ -112,6 +113,10 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)!.settings.arguments as Map;
+    phone = user["phone"];
+    final price = user["price"];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
@@ -122,12 +127,15 @@ class _RegisterState extends State<Register> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
             alignment: Alignment.center,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Text('Welcome User \nSign up to join'),
                     SizedBox(width: 30),
@@ -184,28 +192,28 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  // obscureText: true,
-                  validator: validateMobile,
-                  controller: _phoneNumberController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    phone = value;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Mobile',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    // errorText: _wrongPassword ? _passwordText : null,
-                  ),
-                ),
+                // TextFormField(
+                //   // obscureText: true,
+                //   validator: validateMobile,
+                //   controller: _phoneNumberController,
+                //   keyboardType: TextInputType.number,
+                //   onChanged: (value) {
+                //     phone = value;
+                //   },
+                //   decoration: const InputDecoration(
+                //     labelText: 'Mobile',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.all(
+                //         Radius.circular(10.0),
+                //       ),
+                //       borderSide: BorderSide(
+                //         width: 0,
+                //         style: BorderStyle.solid,
+                //       ),
+                //     ),
+                //     // errorText: _wrongPassword ? _passwordText : null,
+                //   ),
+                // ),
                 const SizedBox(height: 10),
                 TextFormField(
                   // obscureText: true,
@@ -294,7 +302,40 @@ class _RegisterState extends State<Register> {
                   ),
                   color: const Color.fromRGBO(109, 21, 23, 1),
                   // textColor: Colors.white,
-                  onPressed: _submit,
+                  onPressed: () {
+                    try {
+                      if (_formKey.currentState!.validate()) {
+                        final code = OTP.generateTOTPCodeString(
+                            'JBSWY3DPEHPK3PXP',
+                            DateTime.now().millisecondsSinceEpoch);
+                        smsNumber.add(phone.toString());
+                        // String sendResult = await sendSMS(
+                        //         message: code, recipients: smsNumber, sendDirect: true)
+                        //     .catchError((err) {
+                        //   // ignore: avoid_print
+                        //   print(err);
+                        // });
+                        // ignore: avoid_print
+                        // print(sendResult);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VerifyNumber(),
+                              settings: RouteSettings(arguments: {
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "phone": phone,
+                                "email": email,
+                                "password": password,
+                                "price": price,
+                                "code": code
+                              })),
+                        );
+                      }
+                    } catch (e) {
+                      throw e;
+                    }
+                  },
                   child: const Text(
                     'Sign Up',
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -315,7 +356,7 @@ class _RegisterState extends State<Register> {
                           MaterialPageRoute(
                             builder: (context) => const Login(),
                           )),
-                    ))
+                    )),
               ],
             ),
           ),
