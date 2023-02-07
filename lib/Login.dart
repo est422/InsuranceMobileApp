@@ -31,11 +31,14 @@ class _LoginState extends State<Login> {
   }
 
   String? validateMobile(String? value) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
     if (value!.length != 10) {
       return 'Please Enter Your Mobile Number';
-    } else {
-      return null;
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please Enter A Valid Mobile Number';
     }
+    return null;
   }
 
   String? validatePassword(String? value) {
@@ -127,7 +130,7 @@ class _LoginState extends State<Login> {
                     labelText: 'Mobile',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
@@ -150,7 +153,7 @@ class _LoginState extends State<Login> {
                     labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,

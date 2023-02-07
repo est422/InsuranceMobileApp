@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/ChoosePlan.dart';
 // import 'package:flutter_sms/flutter_sms.dart';
 import 'package:otp/otp.dart';
 
@@ -32,12 +33,14 @@ class _RegisterState extends State<Register> {
   // final _auth = FirebaseAuth.instance;
   late String firstName;
   late String lastName;
-  late String email = "";
+  late String email;
   late String password;
   late String confirmPassword;
   late String? phone;
   late bool policy = false;
   late List<String> smsNumber = [];
+  late bool isLoading = false;
+  late int enteredPrice;
 
   // String? validateMobile(String? value) {
   //   if (value!.length != 10) {
@@ -48,11 +51,13 @@ class _RegisterState extends State<Register> {
   // }
 
   String? validateName(String? value) {
+    final RegExp nameRegExp = RegExp('[a-zA-Z]');
     if (value!.length < 3) {
       return 'Name must be more than 2 charater';
-    } else {
+    } else if (nameRegExp.hasMatch(value)) {
       return null;
     }
+    return null;
   }
 
   String? validatePassword(String? value) {
@@ -114,7 +119,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     final user = ModalRoute.of(context)!.settings.arguments as Map;
-    phone = user["phone"];
+    final phone = user["phone"];
     final price = user["price"];
 
     return Scaffold(
@@ -127,7 +132,7 @@ class _RegisterState extends State<Register> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
+            padding: const EdgeInsets.all(20),
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -158,7 +163,7 @@ class _RegisterState extends State<Register> {
                     labelText: 'First Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
@@ -181,7 +186,7 @@ class _RegisterState extends State<Register> {
                     labelText: 'Last Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
@@ -226,9 +231,7 @@ class _RegisterState extends State<Register> {
                   decoration: const InputDecoration(
                     labelText: 'Email (Optional)',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       borderSide: BorderSide(
                         width: 0,
                         style: BorderStyle.solid,
@@ -250,9 +253,7 @@ class _RegisterState extends State<Register> {
                   decoration: const InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       borderSide: BorderSide(
                         width: 0,
                         style: BorderStyle.solid,
@@ -274,7 +275,7 @@ class _RegisterState extends State<Register> {
                     labelText: 'Confirm Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
+                        Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
@@ -302,13 +303,13 @@ class _RegisterState extends State<Register> {
                   ),
                   color: const Color.fromRGBO(109, 21, 23, 1),
                   // textColor: Colors.white,
-                  onPressed: () {
+                  onPressed: () async {
                     try {
                       if (_formKey.currentState!.validate()) {
-                        final code = OTP.generateTOTPCodeString(
-                            'JBSWY3DPEHPK3PXP',
-                            DateTime.now().millisecondsSinceEpoch);
-                        smsNumber.add(phone.toString());
+                        // final code = OTP.generateTOTPCodeString(
+                        //     'JBSWY3DPEHPK3PXP',
+                        //     DateTime.now().millisecondsSinceEpoch);
+                        // smsNumber.add(phone.toString());
                         // String sendResult = await sendSMS(
                         //         message: code, recipients: smsNumber, sendDirect: true)
                         //     .catchError((err) {
@@ -317,23 +318,48 @@ class _RegisterState extends State<Register> {
                         // });
                         // ignore: avoid_print
                         // print(sendResult);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const VerifyNumber(),
-                              settings: RouteSettings(arguments: {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        final http.Response response = await http.post(
+                            Uri.parse(
+                                'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
+                            // 'http://localhost:7000/api/user/create'),
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: jsonEncode(
+                              {
                                 "firstName": firstName,
                                 "lastName": lastName,
-                                "phone": phone,
                                 "email": email,
                                 "password": password,
-                                "price": price,
-                                "code": code
-                              })),
-                        );
+                                "phone": phone,
+                                "enteredPrice": price
+                              },
+                            ));
+                        if (response.statusCode == 200) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ChoosePlan()),
+                          );
+                        } else if (response.statusCode == 400) {
+                          print(response.body);
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       }
                     } catch (e) {
-                      throw e;
+                      print(e);
+                      setState(() {
+                        isLoading = false;
+                      });
                     }
                   },
                   child: const Text(
@@ -357,6 +383,16 @@ class _RegisterState extends State<Register> {
                             builder: (context) => const Login(),
                           )),
                     )),
+                isLoading
+                    ? Container(
+                        // color: Colors.white.withOpacity(0.8),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                              // valueColor: Color.,
+                              ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),

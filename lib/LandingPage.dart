@@ -21,18 +21,19 @@ class _LandingPageState extends State<LandingPage> {
   //   Page2(),
   //   Page3()
   // ];
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _pageController.dispose(); // dispose the PageController
-  }
 
   @override
   initState() {
     super.initState();
     // selectedPage = 0;
     // _pageController = PageController(initialPage: selectedPage);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _pageController.dispose(); // dispose the PageController
   }
 
   @override
@@ -144,55 +145,59 @@ class _LandingPageState extends State<LandingPage> {
 
     // this list holds all the pages
     // all of them are constructed in the very end of this file for readability
-    return Scaffold(
-        body: Stack(
-      children: [
-        PageView.builder(
-            controller: _pageController,
-            onPageChanged: (int index) {
-              setState(() {
-                _activePage = index;
-              });
-            },
-            itemCount: _pages.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _pages[index];
-            }),
-        //creating dots at bottom
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 40,
-          child: Container(
-            color: Colors.black12,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(
-                  _pages.length,
-                  (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: InkWell(
-                          onTap: () {
-                            _pageController.animateToPage(index,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeIn);
-                          },
-                          child: CircleAvatar(
-                            radius: 5,
-                            // check if a dot is connected to the current page
-                            // if true, give it a different color
-                            backgroundColor: _activePage == index
-                                ? Color.fromRGBO(109, 21, 23, 1)
-                                : Colors.white30,
+    // return Scaffold(
+    // body:
+    return PageView(children: [
+      Stack(
+        // fit: StackFit.expand,
+        children: [
+          PageView.builder(
+              controller: _pageController,
+              onPageChanged: (int index) {
+                setState(() {
+                  _activePage = index;
+                });
+              },
+              itemCount: _pages.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(child: _pages[index]);
+              }),
+          //creating dots at bottom
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 40,
+            child: Container(
+              color: Colors.black12,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List<Widget>.generate(
+                    _pages.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: InkWell(
+                            onTap: () {
+                              _pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn);
+                            },
+                            child: CircleAvatar(
+                              radius: 5,
+                              // check if a dot is connected to the current page
+                              // if true, give it a different color
+                              backgroundColor: _activePage == index
+                                  ? Color.fromRGBO(109, 21, 23, 1)
+                                  : Colors.white30,
+                            ),
                           ),
-                        ),
-                      )),
+                        )),
+              ),
             ),
           ),
-        ),
-      ],
-    ));
+        ],
+      )
+    ]);
 
     // child: Stack(
     //   children: [

@@ -46,6 +46,7 @@ dependencies:
   # network_info_plus: ^2.1.4+1
   flutter_secure_storage: ^7.0.1
   page_view_dot_indicator: ^2.1.0
+  image_picker: ^0.8.6+1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+  flutter_launcher_icons: "^0.9.0"
+
+flutter_icons:
+  image_path: "assets/icons/NyalaLogo-1.png" 
+  android: true
+  ios: true
 
   flutter_native_splash: ^2.2.9
 

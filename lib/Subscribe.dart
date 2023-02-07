@@ -127,93 +127,95 @@ class _SubscribeState extends State<Subscribe> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: const EdgeInsets.fromLTRB(40, 60, 20, 0),
+            margin: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 40.0),
+            height: 400,
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(
-                          "assets/images/testimonials-placeholder.png"),
-                    ),
-                    SizedBox(height: 30),
-                    Text('Kindly Send OK to 813'),
-                    Text('to complete insurance registration'),
-                    SizedBox(height: 30),
-                  ],
+                const Icon(
+                  Icons.mail_outline,
+                  size: 100.0,
                 ),
+                const Text('Kindly Send OK to 813'),
+                const Text('complete insurance registration'),
+                // CircleAvatar(
+                //   backgroundImage: AssetImage(
+                //       "assets/images/testimonials-placeholder.png"),
+                // ),
+                // SizedBox(height: 30),
+
+                // SizedBox(height: 30),
                 const SizedBox(height: 10),
                 MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  color: const Color.fromRGBO(109, 21, 23, 1),
-                  // textColor: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HandSetPrice(),
-                            settings: RouteSettings(arguments: {
-                              // "firstName": firstName,
-                              // "lastName": lastName,
-                              "phone": phone,
-                              // "email": email,
-                              // "password": password,
-                              // "code": code
-                            })));
-                  },
-                  child: const Text(
-                    'Click Here',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  ),
-                ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    color: const Color.fromRGBO(109, 21, 23, 1),
+                    // textColor: Colors.white,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HandSetPrice(),
+                              settings: RouteSettings(arguments: {
+                                // "firstName": firstName,
+                                // "lastName": lastName,
+                                "phone": phone,
+                                // "email": email,
+                                // "password": password,
+                                // "code": code
+                              })));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: const Text(
+                        'Click Here',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                    )),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                top: BorderSide(
-                    color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
-          onTap: (value) {
-            // Respond to item press.
-          },
-          items: [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset41@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset42@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset43@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset40@2x.png'),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   decoration: const BoxDecoration(
+      //       color: Colors.white,
+      //       border: Border(
+      //           top: BorderSide(
+      //               color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
+      //   child: BottomNavigationBar(
+      //     type: BottomNavigationBarType.fixed,
+      //     backgroundColor: Colors.white,
+      //     selectedItemColor: Colors.white,
+      //     unselectedItemColor: Colors.white.withOpacity(.60),
+      //     selectedFontSize: 14,
+      //     unselectedFontSize: 14,
+      //     onTap: (value) {
+      //       // Respond to item press.
+      //     },
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset41@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset42@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset43@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset40@2x.png'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
