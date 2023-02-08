@@ -29,8 +29,8 @@ class _HandSetPriceState extends State<HandSetPrice> {
     super.initState();
   }
 
-  String? validateMobile(String? value) {
-    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+  String? validatePrice(String? value) {
+    String pattern = r'^([1-9][0-9]{0,1})$';
     RegExp regExp = RegExp(pattern);
     if (value!.length < 5) {
       return 'Please enter your mobile phone price (Must be greater than or equal to 5 digits)';
@@ -87,7 +87,7 @@ class _HandSetPriceState extends State<HandSetPrice> {
                 const SizedBox(height: 10),
                 TextFormField(
                   // obscureText: true,
-                  validator: validateMobile,
+                  validator: validatePrice,
                   controller: _priceController,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {

@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:insurance_app/BottomNavigation.dart';
 import 'package:storage_info/storage_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -206,194 +207,160 @@ class _DeviceInfoState extends State<DeviceInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
-        title: Text(
-          kIsWeb
-              ? 'Web Browser info'
-              : Platform.isAndroid
-                  ? 'Android Device Info'
-                  : Platform.isIOS
-                      ? 'iOS Device Info'
-                      : Platform.isLinux
-                          ? 'Linux Device Info'
-                          : Platform.isMacOS
-                              ? 'MacOS Device Info'
-                              : Platform.isWindows
-                                  ? 'Windows Device Info'
-                                  : '',
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
+          title: Text(
+            kIsWeb
+                ? 'Web Browser info'
+                : Platform.isAndroid
+                    ? 'Android Device Info'
+                    : Platform.isIOS
+                        ? 'iOS Device Info'
+                        : Platform.isLinux
+                            ? 'Linux Device Info'
+                            : Platform.isMacOS
+                                ? 'MacOS Device Info'
+                                : Platform.isWindows
+                                    ? 'Windows Device Info'
+                                    : '',
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Container(
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Container(
+                          alignment: Alignment.center,
+                          padding:
+                              const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                          child: const Text(
+                            "Your mobile device can be insured",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          )),
+                      Container(
                         alignment: Alignment.center,
-                        padding:
-                            const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-                        child: const Text(
-                          "Your mobile device can be insured",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        )),
-                    Container(
-                      alignment: Alignment.center,
-                      width: 300,
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  height: 300,
-                                  child: ListView(
-                                    children: _deviceData.keys.map(
-                                      (String property) {
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      40.0, 20.0, 0, 0),
-                                              child: Text(
-                                                property,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Container(
+                        width: 300,
+                        child: Card(
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 300,
+                                    child: ListView(
+                                      children: _deviceData.keys.map(
+                                        (String property) {
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
-                                                        10.0, 20.0, 0.0, 0.0),
+                                                        40.0, 20.0, 0, 0),
                                                 child: Text(
-                                                  '${_deviceData[property]}',
-                                                  maxLines: 10,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                  property,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ).toList(),
+                                              Expanded(
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10.0, 20.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    '${_deviceData[property]}',
+                                                    maxLines: 10,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ).toList(),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            FutureBuilder(
-                                future: _getSpace(),
-                                builder: (context, snapshot) {
-                                  // print(snapshot.error);
-                                  if (snapshot.hasData) {
-                                    return Container(
-                                      alignment: Alignment.centerLeft,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          40.0, 10.0, 0.0, 20.0),
-                                      child: Text(
-                                        'Internal Storage Space: ${snapshot.data} GB',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return Container(
+                                ],
+                              ),
+                              FutureBuilder(
+                                  future: _getSpace(),
+                                  builder: (context, snapshot) {
+                                    // print(snapshot.error);
+                                    if (snapshot.hasData) {
+                                      return Container(
                                         alignment: Alignment.centerLeft,
                                         padding: const EdgeInsets.fromLTRB(
-                                            40.0, 10.0, 0.0, 0.0),
-                                        child: const Text(
-                                          "Loading",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.normal,
+                                            40.0, 10.0, 0.0, 20.0),
+                                        child: Text(
+                                          'Internal Storage Space: ${snapshot.data} GB',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ));
-                                  }
-                                }),
-                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return Container(
+                                          alignment: Alignment.centerLeft,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40.0, 10.0, 0.0, 0.0),
+                                          child: const Text(
+                                            "Loading",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ));
+                                    }
+                                  }),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                        child: const Text(
-                          "Please check our payment plans",
-                          style: TextStyle(fontWeight: FontWeight.normal),
-                        )),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      margin: const EdgeInsets.all(10),
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        color: const Color.fromRGBO(109, 21, 23, 1),
-                        // textColor: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Quotes()),
-                          );
-                        },
-                        child: const Text(
-                          'Get A Quote',
-                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      Container(
+                          alignment: Alignment.center,
+                          padding:
+                              const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                          child: const Text(
+                            "Please check our payment plans",
+                            style: TextStyle(fontWeight: FontWeight.normal),
+                          )),
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        margin: const EdgeInsets.all(10),
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          color: const Color.fromRGBO(109, 21, 23, 1),
+                          // textColor: Colors.white,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Quotes()),
+                            );
+                          },
+                          child: const Text(
+                            'Get A Quote',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20.0),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ]),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                top: BorderSide(
-                    color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
-          onTap: (value) {
-            // Respond to item press.
-          },
-          items: [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset41@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset42@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset43@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset40@2x.png'),
-            ),
-          ],
+              ]),
         ),
-      ),
-    );
+        bottomNavigationBar: const BottomNavigation());
   }
 }

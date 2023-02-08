@@ -5,7 +5,7 @@ class User {
   late String _phone;
   late String _email;
 
-  constructorUser(
+  User(
       {required String id,
       required String firstName,
       required String lastName,

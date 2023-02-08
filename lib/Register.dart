@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/ChoosePlan.dart';
 // import 'package:flutter_sms/flutter_sms.dart';
@@ -8,6 +9,9 @@ import 'package:otp/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:insurance_app/Login.dart';
 import 'package:insurance_app/VerifyNumber.dart';
+
+import 'UserProfile.dart';
+import 'main.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
@@ -33,7 +37,7 @@ class _RegisterState extends State<Register> {
   // final _auth = FirebaseAuth.instance;
   late String firstName;
   late String lastName;
-  late String email;
+  late String email = "";
   late String password;
   late String confirmPassword;
   late String? phone;
@@ -41,6 +45,8 @@ class _RegisterState extends State<Register> {
   late List<String> smsNumber = [];
   late bool isLoading = false;
   late int enteredPrice;
+
+  final storage = const FlutterSecureStorage();
 
   // String? validateMobile(String? value) {
   //   if (value!.length != 10) {
@@ -59,6 +65,18 @@ class _RegisterState extends State<Register> {
     }
     return null;
   }
+
+  // String? validateEmail(String? value) {
+  //   String pattern =
+  //       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  //   final RegExp regExp = RegExp(pattern);
+  //   if (value == null) {
+  //     return null;
+  //   } else if (regExp.hasMatch(value)) {
+  //     return 'Please Enter A Valide Email Address';
+  //   }
+  //   return null;
+  // }
 
   String? validatePassword(String? value) {
     if (value!.length < 6) {
@@ -110,6 +128,12 @@ class _RegisterState extends State<Register> {
   //     throw e;
   //   }
   // }
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
 
   @override
   void initState() {
@@ -196,7 +220,7 @@ class _RegisterState extends State<Register> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 // TextFormField(
                 //   // obscureText: true,
                 //   validator: validateMobile,
@@ -219,28 +243,29 @@ class _RegisterState extends State<Register> {
                 //     // errorText: _wrongPassword ? _passwordText : null,
                 //   ),
                 // ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  // obscureText: true,
-                  // textAlignVertical: TextAlignVertical.center,
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Email (Optional)',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    // contentPadding: EdgeInsets.all(30),
-                    // errorText: _wrongPassword ? _passwordText : null,
-                  ),
-                ),
+                // const SizedBox(height: 10),
+                // TextFormField(
+                //   // obscureText: true,
+                //   // textAlignVertical: TextAlignVertical.center,
+                //   keyboardType: TextInputType.emailAddress,
+                //   validator: validateEmail,
+                //   controller: _emailController,
+                //   onChanged: (value) {
+                //     email = value;
+                //   },
+                //   decoration: const InputDecoration(
+                //     labelText: 'Email (Optional)',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                //       borderSide: BorderSide(
+                //         width: 0,
+                //         style: BorderStyle.solid,
+                //       ),
+                //     ),
+                //     // contentPadding: EdgeInsets.all(30),
+                //     // errorText: _wrongPassword ? _passwordText : null,
+                //   ),
+                // ),
                 const SizedBox(height: 10),
                 TextFormField(
                   // obscureText: true,
@@ -342,6 +367,12 @@ class _RegisterState extends State<Register> {
                           setState(() {
                             isLoading = false;
                           });
+                          await storage.write(
+                            key: 'token',
+                            value: jsonDecode(response.body),
+                            iOptions: _getIOSOptions(),
+                            aOptions: _getAndroidOptions(),
+                          );
                           // ignore: use_build_context_synchronously
                           Navigator.push(
                             context,
@@ -349,7 +380,7 @@ class _RegisterState extends State<Register> {
                                 builder: (context) => const ChoosePlan()),
                           );
                         } else if (response.statusCode == 400) {
-                          print(response.body);
+                          // print(response.body);
                           setState(() {
                             isLoading = false;
                           });
@@ -398,42 +429,61 @@ class _RegisterState extends State<Register> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                top: BorderSide(
-                    color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
-          onTap: (value) {
-            // Respond to item press.
-          },
-          items: [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset41@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset42@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset43@2x.png'),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Image.asset('assets/icons/Asset40@2x.png'),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   decoration: const BoxDecoration(
+      //       color: Colors.white,
+      //       border: Border(
+      //           top: BorderSide(
+      //               color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
+      //   child: BottomNavigationBar(
+      //     type: BottomNavigationBarType.fixed,
+      //     backgroundColor: Colors.white,
+      //     selectedItemColor: Colors.white,
+      //     unselectedItemColor: Colors.white.withOpacity(.60),
+      //     selectedFontSize: 14,
+      //     unselectedFontSize: 14,
+      //     onTap: (index) {
+      //       switch (index) {
+      //         case 0:
+      //           Navigator.push(context,
+      //               MaterialPageRoute(builder: (context) => const MyApp()));
+      //           break;
+      //         case 1:
+      //           Navigator.push(context,
+      //               MaterialPageRoute(builder: (context) => const MyApp()));
+      //           break;
+      //         case 2:
+      //           Navigator.push(context,
+      //               MaterialPageRoute(builder: (context) => const MyApp()));
+      //           break;
+      //         case 3:
+      //           Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                   builder: (context) => const UserProfile()));
+      //           break;
+      //       }
+      //     },
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset41@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset42@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset43@2x.png'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         label: '',
+      //         icon: Image.asset('assets/icons/Asset40@2x.png'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

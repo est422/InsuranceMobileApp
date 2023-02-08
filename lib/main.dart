@@ -18,7 +18,7 @@ import 'package:insurance_app/AboutUs.dart';
 import 'package:insurance_app/ContactUs.dart';
 import 'package:insurance_app/Policy.dart';
 import 'package:insurance_app/Register.dart';
-import 'package:insurance_app/models/users.dart';
+import 'package:insurance_app/models/User.dart';
 import 'PhoneInput.dart';
 import 'mainSection.dart';
 // import 'package:firebase_core/firebase_core.dart';
@@ -552,19 +552,20 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                  padding: const EdgeInsets.all(40),
-                  alignment: Alignment.center,
-                  height: 400,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            "assets/images/home_insurance_slider4.jpg"),
-                        fit: BoxFit.fill),
-                  ),
-                  child: const Text(
-                    'Get Insured, Lead a Sustinable Life!',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  )),
+                padding: const EdgeInsets.all(40),
+                alignment: Alignment.center,
+                height: 400,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/home_insurance_slider4.jpg"),
+                      fit: BoxFit.fill),
+                ),
+                // child: const Text(
+                //   'Get Insured, Lead a Sustinable Life!',
+                //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                // )),
+              ),
               Container(
                 margin: const EdgeInsets.all(10),
                 alignment: Alignment.center,
