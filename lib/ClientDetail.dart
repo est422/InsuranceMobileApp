@@ -60,6 +60,19 @@ class _ClientDetailState extends State<ClientDetail> {
     final lastName = user["lastName"];
     final phone = user["phone"];
     final email = user["email"];
+    final device = user['device'];
+    final model = user['model'];
+    final createdAt = user['createdAt'];
+    final handsetCost = user['handsetCost'];
+    final handsetId = user['handsetId'];
+    final iMEI1 = user['iMEI1'];
+    final iMEI2 = user['iMEI2'];
+    final serialNo = user['serialNo'];
+    final platform = user['platform'];
+    final hardWare = user['hardWare'];
+    final enteredAmount = user['enteredAmount'];
+    final selectedPlan = user['selectedPlan'];
+    final imageUrl = user['imageUrl'];
 
     return Scaffold(
         appBar: AppBar(
@@ -111,38 +124,299 @@ class _ClientDetailState extends State<ClientDetail> {
                       ),
                     ],
                   ),
+                  const Text(
+                    'User Information',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(109, 21, 23, 1)),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      // width: 600,
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Card(
+                        child: Column(children: [
+                          ListTile(
+                            title: const Text(
+                              'First Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              firstName,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Last Name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              lastName,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Phone Number',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              phone,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: email != null
+                                ? Text(
+                                    email,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : const Text(
+                                    'Not Set',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                          ),
+                        ]),
+                      )),
+                  const Text(
+                    'Device Information',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(109, 21, 23, 1)),
+                  ),
                   Container(
                       alignment: Alignment.center,
                       // width: 600,
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Card(
                           child: Column(children: [
-                        Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Last Name: $lastName',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            )),
-                        Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Phone Number: $phone',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            )),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Email: $email',
+                        ListTile(
+                          title: const Text(
+                            'Device',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: device != null
+                              ? Text(
+                                  device,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : const Text(
+                                  'Not Set',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Model',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: model != null
+                              ? Text(
+                                  model!,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : const Text(
+                                  'Not Set',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'HandsetCost',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            handsetCost.toString(),
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                        )
-                      ])))
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'HandsetId',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            handsetId.toString(),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'IMEI1',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            iMEI1.toString(),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'IMEI2',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            iMEI2.toString(),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'HardWare',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: hardWare != null
+                              ? Text(
+                                  hardWare,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : const Text(
+                                  'Not Set',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Platform',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: platform != null
+                              ? Text(
+                                  platform!,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : const Text(
+                                  'Not Set',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'SerialNo',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            serialNo.toString(),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'EnteredAmount',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            enteredAmount.toString(),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'SelectedPlan',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            selectedPlan!,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'ImageUrl',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            imageUrl!,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ]))),
+                  // Container(
+                  //     alignment: Alignment.center,
+                  //     // width: 600,
+                  //     padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  //     child: Card(
+                  //         child: Column(children: [
+                  //       Container(
+                  //           alignment: Alignment.centerLeft,
+                  //           padding: const EdgeInsets.all(10.0),
+                  //           child: Text(
+                  //             'Last Name: $lastName',
+                  //             style: const TextStyle(
+                  //                 fontSize: 18, fontWeight: FontWeight.bold),
+                  //           )),
+                  //       Container(
+                  //           alignment: Alignment.centerLeft,
+                  //           padding: const EdgeInsets.all(10.0),
+                  //           child: Text(
+                  //             'Phone Number: $phone',
+                  //             style: const TextStyle(
+                  //                 fontSize: 18, fontWeight: FontWeight.bold),
+                  //           )),
+                  //       Container(
+                  //         alignment: Alignment.centerLeft,
+                  //         padding: const EdgeInsets.all(10.0),
+                  //         child: Text(
+                  //           'Email: $email',
+                  //           style: const TextStyle(
+                  //               fontSize: 18, fontWeight: FontWeight.bold),
+                  //         ),
+                  //       )
+                  //     ]))),
                   // Container(
                   //   padding: EdgeInsets.all(10),
                   //   child: const Text(

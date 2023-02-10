@@ -1,16 +1,44 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insurance_app/AgreeToPolicy.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Clients.dart';
+import 'package:insurance_app/DeviceInfo.dart';
 
 import 'TestDevice.dart';
 import 'UserProfile.dart';
 import 'main.dart';
+
+class User {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String email;
+
+  const User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.phone,
+      required this.email});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      phone: json['Phone'],
+      email: json['Email'],
+    );
+  }
+}
 
 class ChoosePlan extends StatefulWidget {
   const ChoosePlan({super.key});
@@ -23,9 +51,47 @@ class ChoosePlan extends StatefulWidget {
 
 class _ChoosePlanState extends State<ChoosePlan> {
   XFile? imageFile;
+  late String ImageUrl;
   late int amountSelected;
   late String selectedPlanType;
   late bool isLoading = false;
+  final _storage = const FlutterSecureStorage();
+  late String? auth;
+  late bool isLoggedIn = false;
+  late int? userAccountId;
+  Future<User>? profile;
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+
+  Future<void> _readAccess() async {
+    final access = await _storage.read(
+        key: 'token',
+        iOptions: _getIOSOptions(),
+        aOptions: _getAndroidOptions());
+    if (access != null) {
+      // setState(() {
+      //   auth = access;
+      //   // fetchUser(auth);
+      // });
+      String normalizedSource = base64Url.normalize(access.split(".")[1]);
+      var result = utf8.decode(base64Url.decode(normalizedSource));
+      Map<String, dynamic> tokenDecoded = json.decode(result);
+      setState(() {
+        isLoggedIn = true;
+        userAccountId = tokenDecoded['Id'];
+      });
+      // profile = _getProfile(userAccountId);
+    } else {
+      setState(() {
+        isLoggedIn = false;
+      });
+    }
+  }
 
   Future pickImage() async {
     try {
@@ -33,10 +99,18 @@ class _ChoosePlanState extends State<ChoosePlan> {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (imageFile == null) return;
       final imageTemp = XFile(imageFile.path);
-      setState(() => this.imageFile = imageTemp);
+      // setState(() => this.imageFile = imageTemp);
+      setState(() => ImageUrl = imageFile.path);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _readAccess();
+    // profile = _getProfile(userAccountId);
   }
 
   @override
@@ -54,10 +128,10 @@ class _ChoosePlanState extends State<ChoosePlan> {
               children: [
             MaterialButton(
                 color: const Color.fromRGBO(109, 21, 23, 1),
+                onPressed: pickImage,
                 child: const Text("Pick Image from Gallery",
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-                onPressed: () {}),
+                        color: Colors.white, fontWeight: FontWeight.bold))),
             Column(
               children: [
                 Container(
@@ -193,17 +267,45 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   color: const Color.fromRGBO(109, 21, 23, 1),
                                   // textColor: Colors.white,
                                   // onPressed: _launchUrl,
-                                  onPressed: () {
-                                    setState(() {
-                                      amountSelected = 60;
-                                      selectedPlanType = "Monthly";
-                                    });
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const TestDevice()),
-                                    );
+                                  onPressed: () async {
+                                    try {
+                                      setState(() {
+                                        isLoading = true;
+                                        amountSelected = 60;
+                                        selectedPlanType = "Monthly";
+                                      });
+                                      final http.Response response = await http.put(
+                                          Uri.parse(
+                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                          headers: {
+                                            // 'Content-Type':
+                                            //     'multipart/form-data',
+                                            'Content-Type': 'application/json',
+                                          },
+                                          body: jsonEncode(
+                                            {
+                                              "EnteredAmount": amountSelected,
+                                              "SelectedPlan": selectedPlanType,
+                                              "ImageUrl": ImageUrl
+                                            },
+                                          ));
+                                      if (response.statusCode == 200) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AgreeToPolicy()),
+                                        );
+                                      } else if (response.statusCode == 404) {
+                                        throw Exception('User edit failed!');
+                                        // print(response);
+                                      }
+                                    } catch (e) {
+                                      // ignore: avoid_print
+                                      print(e);
+                                    }
                                   },
                                   child: const Text(
                                     'Continue',
@@ -248,49 +350,42 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                         amountSelected = 120;
                                         selectedPlanType = "Annual";
                                       });
-                                      final http.Response response = await http.post(
+                                      final http.Response response = await http.put(
                                           Uri.parse(
-                                              'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
-                                          // 'http://localhost:7000/api/user/create'),
+                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
                                           headers: {
+                                            // 'Content-Type':
+                                            //     'multipart/form-data',
                                             'Content-Type': 'application/json',
                                           },
                                           body: jsonEncode(
                                             {
-                                              "amountSelected": amountSelected,
-                                              "selectedPlan": selectedPlanType
+                                              "EnteredAmount": amountSelected,
+                                              "SelectedPlan": selectedPlanType,
+                                              "ImageUrl": ImageUrl
                                             },
                                           ));
-                                      // if (response.statusCode == 200) {
-                                      //   // ignore: use_build_context_synchronously
-                                      //   Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             const UserProfile(),
-                                      //         settings:
-                                      //             RouteSettings(arguments: {
-                                      //           "firstName": firstName,
-                                      //           "lastName": lastName,
-                                      //           "phone": phone,
-                                      //           "email": email,
-                                      //           // "password": password,
-                                      //           // "code": code
-                                      //         })),
-                                      // );
-                                      // } else {
-                                      //   throw Exception(
-                                      //       'User creation failed!');
-                                      //   // print(response);
-                                      // }
+                                      if (response.statusCode == 200) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AgreeToPolicy()),
+                                        );
+                                      } else if (response.statusCode == 404) {
+                                        throw Exception('User edit failed!');
+                                        // print(response);
+                                      }
                                     } catch (e) {
                                       // ignore: avoid_print
                                       print(e);
                                     }
-                                    setState(() {
-                                      amountSelected = 120;
-                                      selectedPlanType = "Annual";
-                                    });
+                                    // setState(() {
+                                    //   amountSelected = 120;
+                                    //   selectedPlanType = "Annual";
+                                    // });
                                   },
                                   child: const Text(
                                     'Continue',

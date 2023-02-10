@@ -30,11 +30,11 @@ class _HandSetPriceState extends State<HandSetPrice> {
   }
 
   String? validatePrice(String? value) {
-    String pattern = r'^([1-9][0-9]{0,1})$';
+    String pattern = r'^\+?[1-9]\d*$';
     RegExp regExp = RegExp(pattern);
     if (value!.length < 5) {
       return 'Please enter your mobile phone price (Must be greater than or equal to 5 digits)';
-    } else if (regExp.hasMatch(value)) {
+    } else if (!regExp.hasMatch(value)) {
       return 'Please enter valid number';
     }
     return null;

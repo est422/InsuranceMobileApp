@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/ChoosePlan.dart';
+import 'package:insurance_app/Clients.dart';
 import 'package:insurance_app/Quotes.dart';
 import 'package:insurance_app/TestDevice.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
@@ -69,6 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
   late PageController _pageController =
       PageController(initialPage: 0); // set the initial page you want to show
   int _activePage = 0;
+  late bool isLoggedIn = false;
+  late int userAccountId;
+  // Future<User>? profile;
 
   // String? validateMobile(String? value) {
   //   if (value!.length != 10) {
@@ -117,25 +121,37 @@ class _MyHomePageState extends State<MyHomePage> {
   //   }
   // }
 
+  Future<void> _readAccess() async {
+    final access = await _storage.read(
+        key: 'token',
+        iOptions: _getIOSOptions(),
+        aOptions: _getAndroidOptions());
+    if (access != null) {
+      // setState(() {
+      //   auth = access;
+      //   // fetchUser(auth);
+      // });
+      String normalizedSource = base64Url.normalize(access.split(".")[1]);
+      var result = utf8.decode(base64Url.decode(normalizedSource));
+      Map<String, dynamic> tokenDecoded = json.decode(result);
+      setState(() {
+        isLoggedIn = true;
+        userAccountId = tokenDecoded['Id'];
+      });
+      // profile = _getProfile(userAccountId);
+    } else {
+      setState(() {
+        isLoggedIn = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     // _activePage = 0;
     // _pageController = PageController(initialPage: _activePage);
-    // _readAccess();
-  }
-
-  Future<void> _readAccess() async {
-    final access = await _storage.read(
-        key: 'Access',
-        iOptions: _getIOSOptions(),
-        aOptions: _getAndroidOptions());
-    if (access != null) {
-      setState(() {
-        auth = access;
-        // fetchUser(auth);
-      });
-    }
+    _readAccess();
   }
 
   // Future<User> fetchUser(auth) async {
@@ -344,9 +360,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   ],
                 )),
-            const ListTile(
+            ListTile(
               // leading: Icon(Icons.message),
-              title: Text('Home'),
+              title: const Text('Home'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyApp()),
+              ),
             ),
             ListTile(
               // leading: Icon(Icons.account_circle),
@@ -380,6 +400,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => const Register()),
               ),
             ),
+            isLoggedIn && userAccountId == 2
+                ? ListTile(
+                    // leading: Icon(Icons.settings),
+                    title: const Text('Admin'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Clients()),
+                    ),
+                  )
+                : Container()
           ],
         ),
       ),

@@ -1,11 +1,38 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:insurance_app/Category.dart';
+import 'package:insurance_app/ChoosePlan.dart';
 import 'package:insurance_app/Register.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'MobileInfo.dart';
+
+class User {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String email;
+
+  const User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.phone,
+      required this.email});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      phone: json['Phone'],
+      email: json['Email'],
+    );
+  }
+}
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,6 +51,43 @@ class _LoginState extends State<Login> {
   late String phone;
   late String password;
   late bool isLoading = false;
+  final _storage = const FlutterSecureStorage();
+  late String? auth;
+  late bool isLoggedIn = false;
+  late int? userAccountId;
+  Future<User>? profile;
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+
+  Future<void> _readAccess() async {
+    final access = await _storage.read(
+        key: 'token',
+        iOptions: _getIOSOptions(),
+        aOptions: _getAndroidOptions());
+    if (access != null) {
+      // setState(() {
+      //   auth = access;
+      //   // fetchUser(auth);
+      // });
+      String normalizedSource = base64Url.normalize(access.split(".")[1]);
+      var result = utf8.decode(base64Url.decode(normalizedSource));
+      Map<String, dynamic> tokenDecoded = json.decode(result);
+      setState(() {
+        isLoggedIn = true;
+        userAccountId = tokenDecoded['Id'];
+      });
+      // profile = _getProfile(userAccountId);
+    } else {
+      setState(() {
+        isLoggedIn = false;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -54,7 +118,7 @@ class _LoginState extends State<Login> {
       try {
         final http.Response response = await http.post(
           Uri.parse(
-              'https://insurancebackendapi-5yi8.onrender.com/api/user/login'),
+              'https://insurancebackendapi-5yi8.onrender.com/api/users/login'),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -63,14 +127,21 @@ class _LoginState extends State<Login> {
             'password': password,
           }),
         );
+        // print(response);
         if (response.statusCode == 200) {
           setState(() {
             isLoading = false;
           });
+          await _storage.write(
+            key: 'token',
+            value: jsonDecode(response.body),
+            iOptions: _getIOSOptions(),
+            aOptions: _getAndroidOptions(),
+          );
           // ignore: use_build_context_synchronously
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Category()),
+            MaterialPageRoute(builder: (context) => const ChoosePlan()),
           );
         } else {
           throw Exception('User login failed!');
@@ -174,6 +245,7 @@ class _LoginState extends State<Login> {
                     setState(() {
                       isLoading = true;
                     });
+                    _submit();
                   },
                   child: const Text(
                     'Login',

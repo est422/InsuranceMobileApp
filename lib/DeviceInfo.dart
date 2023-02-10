@@ -1,14 +1,43 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/UserProfile.dart';
 import 'package:storage_info/storage_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Quotes.dart';
+
+class User {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String email;
+
+  const User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.phone,
+      required this.email});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      phone: json['Phone'],
+      email: json['Email'],
+    );
+  }
+}
 
 class DeviceInfo extends StatefulWidget {
   const DeviceInfo({super.key});
@@ -23,10 +52,61 @@ class _DeviceInfoState extends State<DeviceInfo> {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Map<String, dynamic> _deviceData = <String, dynamic>{};
 
+  late String? board;
+  late String? brand;
+  late String? device;
+  late String? display;
+  late String? fingerprint;
+  late String? hardware;
+  late String? host;
+  // late String? HandsetId;
+  late String? manufacturer;
+  late String? model;
+  late String? product;
+  late bool isLoading = false;
+  final _storage = const FlutterSecureStorage();
+  late String? auth;
+  late bool isLoggedIn = false;
+  late int? userAccountId;
+  Future<User>? profile;
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
+  IOSOptions _getIOSOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+
+  Future<void> _readAccess() async {
+    final access = await _storage.read(
+        key: 'token',
+        iOptions: _getIOSOptions(),
+        aOptions: _getAndroidOptions());
+    if (access != null) {
+      // setState(() {
+      //   auth = access;
+      //   // fetchUser(auth);
+      // });
+      String normalizedSource = base64Url.normalize(access.split(".")[1]);
+      var result = utf8.decode(base64Url.decode(normalizedSource));
+      Map<String, dynamic> tokenDecoded = json.decode(result);
+      setState(() {
+        isLoggedIn = true;
+        userAccountId = tokenDecoded['Id'];
+      });
+      // profile = _getProfile(userAccountId);
+    } else {
+      setState(() {
+        isLoggedIn = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    _readAccess();
   }
 
   Future<double> _getSpace() async {
@@ -84,7 +164,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
       // 'fingerprint': build.fingerprint,
       'hardware': build.hardware,
       // 'host': build.host,
-      // 'id': build.id,
+      'id': build.id,
       'manufacturer': build.manufacturer,
       'model': build.model,
       'product': build.product,
@@ -337,24 +417,78 @@ class _DeviceInfoState extends State<DeviceInfo> {
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(10),
                         child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          color: const Color.fromRGBO(109, 21, 23, 1),
-                          // textColor: Colors.white,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Quotes()),
-                            );
-                          },
-                          child: const Text(
-                            'Get A Quote',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                          ),
-                        ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            color: const Color.fromRGBO(109, 21, 23, 1),
+                            // textColor: Colors.white,
+                            onPressed: () async {
+                              print(_deviceData);
+                              try {
+                                setState(() {
+                                  isLoading = true;
+                                  // board = _deviceData[board];
+                                  // brand = _deviceData[brand];
+                                  device = _deviceData["device"];
+                                  // display = _deviceData[display];
+                                  // fingerprint = _deviceData[fingerprint];
+                                  hardware = _deviceData["hardware"];
+                                  host = _deviceData["host"];
+                                  // HandsetId = _deviceData["id"];
+                                  manufacturer = _deviceData["manufacturer"];
+                                  model = _deviceData["model"];
+                                  product = _deviceData["product"];
+                                });
+                                final http.Response response = await http.put(
+                                    Uri.parse(
+                                        'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                    // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                    headers: {
+                                      // 'Content-Type':
+                                      //     'multipart/form-data',
+                                      'Content-Type': 'application/json',
+                                    },
+                                    body: jsonEncode(
+                                      {
+                                        // "Board": board,
+                                        // "brand": brand,
+                                        "Device": device,
+                                        // "display": display,
+                                        // "fingerprint": fingerprint,
+                                        "HardWare": hardware,
+                                        // "host": host,
+                                        // "HandsetId": HandsetId,
+                                        // "IMEI1": manufacturer,
+                                        // "IMEI2":
+                                        "SerialNo": model,
+                                        "Platform": product,
+                                      },
+                                    ));
+                                if (response.statusCode == 200) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UserProfile()),
+                                  );
+                                } else if (response.statusCode == 404) {
+                                  throw Exception('User edit failed!');
+                                  // print(response);
+                                }
+                              } catch (e) {
+                                // ignore: avoid_print
+                                print(e);
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5.0),
+                              child: const Text(
+                                'Verify Your Device Information',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18.0),
+                              ),
+                            )),
                       ),
                     ],
                   ),

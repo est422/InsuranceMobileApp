@@ -37,7 +37,7 @@ class _RegisterState extends State<Register> {
   // final _auth = FirebaseAuth.instance;
   late String firstName;
   late String lastName;
-  late String email = "";
+  late String? email;
   late String password;
   late String confirmPassword;
   late String? phone;
@@ -57,11 +57,11 @@ class _RegisterState extends State<Register> {
   // }
 
   String? validateName(String? value) {
-    final RegExp nameRegExp = RegExp('[a-zA-Z]');
+    final RegExp nameRegExp = RegExp(r'^[a-zA-Z]*$');
     if (value!.length < 3) {
       return 'Name must be more than 2 charater';
-    } else if (nameRegExp.hasMatch(value)) {
-      return null;
+    } else if (!nameRegExp.hasMatch(value)) {
+      return 'Please Enter A Valid Name';
     }
     return null;
   }
@@ -70,12 +70,10 @@ class _RegisterState extends State<Register> {
   //   String pattern =
   //       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   //   final RegExp regExp = RegExp(pattern);
-  //   if (value == null) {
+  //   if (regExp.hasMatch(value!)) {
   //     return null;
-  //   } else if (regExp.hasMatch(value)) {
-  //     return 'Please Enter A Valide Email Address';
   //   }
-  //   return null;
+  //   return 'Please Enter A Valide Email Address';
   // }
 
   String? validatePassword(String? value) {
@@ -179,7 +177,7 @@ class _RegisterState extends State<Register> {
                   // obscureText: true,
                   validator: validateName,
                   controller: _firstNameController,
-                  keyboardType: TextInputType.visiblePassword,
+                  // keyboardType: TextInputType.visiblePassword,
                   onChanged: (value) {
                     firstName = value;
                   },
@@ -202,7 +200,7 @@ class _RegisterState extends State<Register> {
                   // obscureText: true,
                   validator: validateName,
                   controller: _lastNameController,
-                  keyboardType: TextInputType.visiblePassword,
+                  // keyboardType: TextInputType.visiblePassword,
                   onChanged: (value) {
                     lastName = value;
                   },
@@ -348,7 +346,7 @@ class _RegisterState extends State<Register> {
                         });
                         final http.Response response = await http.post(
                             Uri.parse(
-                                'https://insurancebackendapi-5yi8.onrender.com/api/user/create'),
+                                'https://insurancebackendapi-5yi8.onrender.com/api/users/create'),
                             // 'http://localhost:7000/api/user/create'),
                             headers: {
                               'Content-Type': 'application/json',
@@ -357,7 +355,7 @@ class _RegisterState extends State<Register> {
                               {
                                 "firstName": firstName,
                                 "lastName": lastName,
-                                "email": email,
+                                // "email": email,
                                 "password": password,
                                 "phone": phone,
                                 "enteredPrice": price
