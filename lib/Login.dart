@@ -5,9 +5,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:insurance_app/Category.dart';
 import 'package:insurance_app/ChoosePlan.dart';
+import 'package:insurance_app/DeviceInfo.dart';
 import 'package:insurance_app/Register.dart';
+import 'package:insurance_app/UserInfo.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'MobileInfo.dart';
+import 'PhoneInput.dart';
 
 class User {
   final int id;
@@ -141,7 +144,7 @@ class _LoginState extends State<Login> {
           // ignore: use_build_context_synchronously
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ChoosePlan()),
+            MaterialPageRoute(builder: (context) => const UserInfo()),
           );
         } else {
           throw Exception('User login failed!');
@@ -260,12 +263,12 @@ class _LoginState extends State<Login> {
                         style: TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
-                            color: const Color.fromRGBO(109, 21, 23, 1)),
+                            color: Color.fromRGBO(109, 21, 23, 1)),
                       ),
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Register(),
+                            builder: (context) => const PhoneInput(),
                           )),
                     )),
                 // Loading

@@ -397,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Sign Up'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Register()),
+                MaterialPageRoute(builder: (context) => const PhoneInput()),
               ),
             ),
             isLoggedIn && userAccountId == 2

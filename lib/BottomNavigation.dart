@@ -37,7 +37,7 @@ class BottomNavigation extends StatelessWidget {
               break;
             case 3:
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Clients()));
+                  MaterialPageRoute(builder: (context) => const MyApp()));
               break;
           }
         },

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Category.dart';
-import 'package:insurance_app/ChoosePlan.dart';
 import 'package:insurance_app/Clients.dart';
 import 'package:insurance_app/MobileInfo.dart';
+import 'package:insurance_app/TestDevice.dart';
 import 'package:insurance_app/main.dart';
 import 'package:insurance_app/models/User.dart';
 
@@ -75,16 +75,16 @@ class User {
   }
 }
 
-class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+class UserInfo extends StatefulWidget {
+  const UserInfo({super.key});
 
   @override
-  State<UserProfile> createState() {
-    return _UserProfileState();
+  State<UserInfo> createState() {
+    return _UserInfoState();
   }
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _UserInfoState extends State<UserInfo> {
   final _formKey = GlobalKey<FormState>();
   final _storage = const FlutterSecureStorage();
   late String? auth;
@@ -160,7 +160,7 @@ class _UserProfileState extends State<UserProfile> {
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
           // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
-          title: const Text('User Profile'),
+          title: const Text('User Informaiton'),
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -480,7 +480,7 @@ class _UserProfileState extends State<UserProfile> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const ChoosePlan(),
+                                              const TestDevice(),
                                         ),
                                       ))),
                         ]));

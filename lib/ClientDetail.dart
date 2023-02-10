@@ -82,59 +82,64 @@ class _ClientDetailState extends State<ClientDetail> {
         ),
         body: SingleChildScrollView(
             child: Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(2.0),
                 child: Column(children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(40, 10, 0, 10),
-                        child: const CircleAvatar(
-                          backgroundImage: AssetImage(
-                              "assets/images/testimonials-placeholder.png"),
-                          radius: 50,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-                        child: Column(children: [
-                          Text(
-                            'FirstName: $firstName',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          // Container(
-                          //     padding: const EdgeInsets.all(10.0),
-                          //     child: InkWell(
-                          //         child: const Text(
-                          //           'Client Profile',
-                          //           style: TextStyle(
-                          //               fontSize: 20.0,
-                          //               fontWeight: FontWeight.bold,
-                          //               color: Color.fromRGBO(109, 21, 23, 1)),
-                          //         ),
-                          //         onTap: () => Navigator.push(
-                          //               context,
-                          //               MaterialPageRoute(
-                          //                 builder: (context) => const Category(),
-                          //               ),
-                          //             ))),
-                        ]),
-                      ),
-                    ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   // crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: <Widget>[
+                  Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(20),
+                    child: const CircleAvatar(
+                      backgroundImage: AssetImage(
+                          "assets/images/testimonials-placeholder.png"),
+                      radius: 50,
+                    ),
                   ),
-                  const Text(
-                    'User Information',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(109, 21, 23, 1)),
-                  ),
+                  // const SizedBox(width: 10),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                  //   child: Column(children: [
+                  //     Text(
+                  //       'FirstName: $firstName',
+                  //       style: const TextStyle(
+                  //           fontSize: 20, fontWeight: FontWeight.bold),
+                  //     ),
+                  // Container(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: InkWell(
+                  //         child: const Text(
+                  //           'Client Profile',
+                  //           style: TextStyle(
+                  //               fontSize: 20.0,
+                  //               fontWeight: FontWeight.bold,
+                  //               color: Color.fromRGBO(109, 21, 23, 1)),
+                  //         ),
+                  //         onTap: () => Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                 builder: (context) => const Category(),
+                  //               ),
+                  //             ))),
+                  // ]),
+                  // ),
+                  // ],
+                  // ),
+                  Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: const Text(
+                        'User Information',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(109, 21, 23, 1)),
+                      )),
                   Container(
                       alignment: Alignment.center,
                       // width: 600,
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      // padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      padding: const EdgeInsets.all(10),
                       child: Card(
                         child: Column(children: [
                           ListTile(

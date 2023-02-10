@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/UserInfo.dart';
 import 'package:insurance_app/UserProfile.dart';
 import 'package:storage_info/storage_info.dart';
 import 'package:flutter/foundation.dart';
@@ -406,15 +407,9 @@ class _DeviceInfoState extends State<DeviceInfo> {
                         ),
                       ),
                       Container(
-                          alignment: Alignment.center,
-                          padding:
-                              const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                          child: const Text(
-                            "Please check our payment plans",
-                            style: TextStyle(fontWeight: FontWeight.normal),
-                          )),
-                      Container(
-                        alignment: Alignment.bottomCenter,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                        // alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(10),
                         child: MaterialButton(
                             shape: RoundedRectangleBorder(
@@ -423,7 +418,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                             color: const Color.fromRGBO(109, 21, 23, 1),
                             // textColor: Colors.white,
                             onPressed: () async {
-                              print(_deviceData);
+                              // print(_deviceData);
                               try {
                                 setState(() {
                                   isLoading = true;
@@ -469,8 +464,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UserProfile()),
+                                        builder: (context) => const UserInfo()),
                                   );
                                 } else if (response.statusCode == 404) {
                                   throw Exception('User edit failed!');

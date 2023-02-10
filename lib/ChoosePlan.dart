@@ -135,7 +135,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
             Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.fromLTRB(10.0, 20.0, 0, 0),
+                  margin: const EdgeInsets.all(20.0),
                   alignment: Alignment.topLeft,
                   child: const Text(
                     'Available with leading mobile carriers and providers.',
@@ -397,6 +397,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                             ),
                           ]),
                       Container(
+                        padding: const EdgeInsets.all(10.0),
                         child: const Text('WHATS COVERED',
                             style: TextStyle(
                                 fontSize: 20,
@@ -414,6 +415,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   color: Colors.green,
                                 ),
                                 Container(
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Text('Accidental Damage'),
                                 ),
                               ]),
@@ -423,6 +425,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                               color: Colors.green,
                             ),
                             Container(
+                              padding: const EdgeInsets.all(15.0),
                               child: Text('Mechanical Breakdown'),
                             ),
                           ]),
@@ -432,6 +435,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                               color: Colors.green,
                             ),
                             Container(
+                              padding: const EdgeInsets.all(15.0),
                               child: Text('Malicious Damage'),
                             ),
                           ]),
@@ -441,6 +445,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                               color: Colors.green,
                             ),
                             Container(
+                              padding: const EdgeInsets.all(15.0),
                               child: Text('Liquid Damage'),
                             )
                           ])
