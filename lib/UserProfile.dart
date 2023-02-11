@@ -11,6 +11,8 @@ import 'package:insurance_app/MobileInfo.dart';
 import 'package:insurance_app/main.dart';
 import 'package:insurance_app/models/User.dart';
 
+import 'DrawerNavigationMenu.dart';
+
 class User {
   final int id;
   final String firstName;
@@ -162,6 +164,7 @@ class _UserProfileState extends State<UserProfile> {
           // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
           title: const Text('User Profile'),
         ),
+        endDrawer: const DrawerNavigationMenu(),
         body: SingleChildScrollView(
             child: Container(
                 padding: const EdgeInsets.all(10),

@@ -168,7 +168,7 @@ class _LoginState extends State<Login> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,15 +200,18 @@ class _LoginState extends State<Login> {
                   onChanged: (value) {
                     phone = value;
                   },
-                  decoration: const InputDecoration(
+                  // style: TextStyle(backgroundColor: Colors.grey),
+                  decoration: InputDecoration(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
                     labelText: 'Mobile',
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,
@@ -223,15 +226,17 @@ class _LoginState extends State<Login> {
                   onChanged: (value) {
                     password = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
                     labelText: 'Password',
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,

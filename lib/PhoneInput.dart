@@ -111,15 +111,17 @@ class _PhoneInputState extends State<PhoneInput> {
                   onChanged: (value) {
                     phone = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Mobile',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,

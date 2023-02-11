@@ -11,6 +11,7 @@ import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Clients.dart';
 import 'package:insurance_app/DeviceInfo.dart';
 
+import 'DrawerNavigationMenu.dart';
 import 'TestDevice.dart';
 import 'UserProfile.dart';
 import 'main.dart';
@@ -121,6 +122,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
         backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
         title: const Text("Choose Plan"),
       ),
+      endDrawer: const DrawerNavigationMenu(),
       body: SingleChildScrollView(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

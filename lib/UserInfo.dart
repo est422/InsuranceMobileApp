@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Category.dart';
 import 'package:insurance_app/Clients.dart';
+import 'package:insurance_app/DrawerNavigationMenu.dart';
 import 'package:insurance_app/MobileInfo.dart';
 import 'package:insurance_app/TestDevice.dart';
 import 'package:insurance_app/main.dart';
@@ -162,6 +163,7 @@ class _UserInfoState extends State<UserInfo> {
           // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
           title: const Text('User Informaiton'),
         ),
+        endDrawer: const DrawerNavigationMenu(),
         body: SingleChildScrollView(
             child: Container(
                 padding: const EdgeInsets.all(10),

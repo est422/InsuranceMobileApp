@@ -93,15 +93,17 @@ class _HandSetPriceState extends State<HandSetPrice> {
                   onChanged: (value) {
                     price = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Enter Handset Cost',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,

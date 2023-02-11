@@ -6,6 +6,8 @@ import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/ClientDetail.dart';
 import 'package:insurance_app/models/User.dart';
 
+import 'DrawerNavigationMenu.dart';
+
 class User {
   final int id;
   final String firstName;
@@ -162,6 +164,7 @@ class _ClientsState extends State<Clients> {
         // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: const Text('Clients'),
       ),
+      endDrawer: const DrawerNavigationMenu(),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(16.0),
@@ -179,7 +182,7 @@ class _ClientsState extends State<Clients> {
               } else {
                 return Container(
                     alignment: Alignment.center,
-                    width: 300,
+                    // width: 300,
                     child: Card(
                         child: Column(children: [
                       Stack(children: [

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/ChoosePlan.dart';
+import 'package:insurance_app/Policy.dart';
 // import 'package:flutter_sms/flutter_sms.dart';
 import 'package:otp/otp.dart';
 
@@ -181,15 +182,17 @@ class _RegisterState extends State<Register> {
                   onChanged: (value) {
                     firstName = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'First Name',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,
@@ -204,15 +207,17 @@ class _RegisterState extends State<Register> {
                   onChanged: (value) {
                     lastName = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Last Name',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,
@@ -273,13 +278,15 @@ class _RegisterState extends State<Register> {
                   onChanged: (value) {
                     password = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,
@@ -294,15 +301,17 @@ class _RegisterState extends State<Register> {
                   onChanged: (value) {
                     confirmPassword = value;
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    border: OutlineInputBorder(
+                    fillColor: Colors.grey.shade300,
+                    filled: true,
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30.0),
                       ),
                       borderSide: BorderSide(
                         width: 0,
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                       ),
                     ),
                     // errorText: _wrongPassword ? _passwordText : null,
@@ -316,7 +325,14 @@ class _RegisterState extends State<Register> {
                         policy = true;
                       },
                     ),
-                    const Text('aggree to terms and poicy'),
+                    InkWell(
+                      child: const Text('aggree to terms and poicy'),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Policy(),
+                          )),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
