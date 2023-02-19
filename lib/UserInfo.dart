@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Category.dart';
+import 'package:insurance_app/ChoosePlan.dart';
 import 'package:insurance_app/Clients.dart';
 import 'package:insurance_app/DrawerNavigationMenu.dart';
 import 'package:insurance_app/MobileInfo.dart';
@@ -482,7 +483,7 @@ class _UserInfoState extends State<UserInfo> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const TestDevice(),
+                                              const ChoosePlan(),
                                         ),
                                       ))),
                         ]));

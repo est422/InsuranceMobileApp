@@ -22,7 +22,7 @@ import 'package:insurance_app/Policy.dart';
 import 'package:insurance_app/Register.dart';
 import 'package:insurance_app/models/User.dart';
 import 'PhoneInput.dart';
-import 'mainSection.dart';
+import 'ScreenTest.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'LandingPage.dart';
 
@@ -213,60 +213,62 @@ class _MyHomePageState extends State<MyHomePage> {
           ]),
     ];
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
-          title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
-        ),
-        endDrawer: const DrawerNavigationMenu(),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
+        //   title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
+        // ),
+        // endDrawer: const DrawerNavigationMenu(),
+        // body: const ScreenTest(),
+        // );
         body: Stack(
-          // fit: StackFit.expand,
-          children: [
-            PageView.builder(
-                controller: _pageController,
-                onPageChanged: (int index) {
-                  setState(() {
-                    _activePage = index;
-                  });
-                },
-                itemCount: _pages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(child: _pages[index]);
-                }),
-            //creating dots at bottom
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 40,
-              child: Container(
-                color: Colors.black12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List<Widget>.generate(
-                      _pages.length,
-                      (index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: InkWell(
-                              onTap: () {
-                                _pageController.animateToPage(index,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeIn);
-                              },
-                              child: CircleAvatar(
-                                radius: 5,
-                                // check if a dot is connected to the current page
-                                // if true, give it a different color
-                                backgroundColor: _activePage == index
-                                    ? Color.fromRGBO(109, 21, 23, 1)
-                                    : Colors.white30,
-                              ),
-                            ),
-                          )),
-                ),
-              ),
+      // fit: StackFit.expand,
+      children: [
+        PageView.builder(
+            controller: _pageController,
+            onPageChanged: (int index) {
+              setState(() {
+                _activePage = index;
+              });
+            },
+            itemCount: _pages.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(child: _pages[index]);
+            }),
+        //creating dots at bottom
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 40,
+          child: Container(
+            color: Colors.black12,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List<Widget>.generate(
+                  _pages.length,
+                  (index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: InkWell(
+                          onTap: () {
+                            _pageController.animateToPage(index,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          },
+                          child: CircleAvatar(
+                            radius: 5,
+                            // check if a dot is connected to the current page
+                            // if true, give it a different color
+                            backgroundColor: _activePage == index
+                                ? Color.fromRGBO(109, 21, 23, 1)
+                                : Colors.white30,
+                          ),
+                        ),
+                      )),
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    ));
   }
 }

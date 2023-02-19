@@ -57,5 +57,7 @@
 		<string>Upload image from camera for screen background</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Post videos to profile</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Take pretty screenshots and save it to the PhotoLibrary.</string>
 	</dict>
 </plist>

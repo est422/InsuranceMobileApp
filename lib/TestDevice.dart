@@ -4,6 +4,7 @@ import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/CameraTest.dart';
 
 import 'package:insurance_app/Quotes.dart';
+import 'package:insurance_app/ScreenTest.dart';
 import 'package:insurance_app/VerifyDevice.dart';
 import 'VerifyDevice.dart';
 
@@ -157,14 +158,14 @@ class _TestDeviceState extends State<TestDevice> {
                       ),
                       color: const Color.fromRGBO(109, 21, 23, 1),
                       // textColor: Colors.white,
-                      onPressed: () {},
-                      // onPressed: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const Quotes()),
-                      //   );
-                      // },
+                      // onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ScreenTest()),
+                        );
+                      },
                       child: const Text(
                         'Start Diagnostic Test',
                         style: TextStyle(fontSize: 20.0, color: Colors.white),

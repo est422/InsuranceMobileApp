@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/ScreenTest.dart';
 import 'package:insurance_app/UserInfo.dart';
 import 'package:insurance_app/UserProfile.dart';
 import 'package:storage_info/storage_info.dart';
@@ -464,7 +465,8 @@ class _DeviceInfoState extends State<DeviceInfo> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const UserInfo()),
+                                        builder: (context) =>
+                                            const ScreenTest()),
                                   );
                                 } else if (response.statusCode == 404) {
                                   throw Exception('User edit failed!');

@@ -22,7 +22,6 @@ import 'package:insurance_app/Register.dart';
 import 'package:insurance_app/models/User.dart';
 import 'PhoneInput.dart';
 import 'main.dart';
-import 'mainSection.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'LandingPage.dart';
 
