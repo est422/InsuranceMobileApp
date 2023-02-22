@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/CameraTest.dart';
 import 'package:insurance_app/ChoosePlan.dart';
 import 'package:insurance_app/Clients.dart';
 import 'package:insurance_app/DrawerNavigationMenu.dart';

@@ -14,10 +14,13 @@ class ScreenTest extends StatefulWidget {
 class _ScreenTestState extends State<ScreenTest> {
   List<DrawingPoints?> points = [];
   late Timer _timer;
+  late bool screenCheck = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+    print('suck my dick');
     startPainting();
     // takeScreenShot();
     // endPainting();
@@ -69,6 +72,10 @@ class _ScreenTestState extends State<ScreenTest> {
         MaterialPageRoute(builder: (context) => const CameraTest()),
       );
     });
+    setState(() {
+      points = [];
+      screenCheck = true;
+    });
   }
 
   void startPainting() {
@@ -84,8 +91,8 @@ class _ScreenTestState extends State<ScreenTest> {
     });
   }
 
-  void endPainting() {
-    _timer = Timer(const Duration(seconds: 15), () {
+  Future<void> endPainting() async {
+    await Future.delayed(const Duration(seconds: 15), () {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.all(20.0),
@@ -93,13 +100,8 @@ class _ScreenTestState extends State<ScreenTest> {
         content: Text("Time has expired please wait a moment"),
       ));
       takeScreenShot();
+      // _timer.cancel();
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
   }
 }
 

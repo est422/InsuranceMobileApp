@@ -47,7 +47,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   // final _auth = FirebaseAuth.instance;
@@ -117,8 +117,8 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      try {
+    try {
+      if (formKey.currentState!.validate()) {
         final http.Response response = await http.post(
           Uri.parse(
               'https://insurancebackendapi-5yi8.onrender.com/api/users/login'),
@@ -149,10 +149,10 @@ class _LoginState extends State<Login> {
         } else {
           throw Exception('User login failed!');
         }
-      } catch (e) {
-        // ignore: avoid_print
-        print(e);
       }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 
@@ -166,7 +166,7 @@ class _LoginState extends State<Login> {
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Container(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -181,7 +181,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
@@ -191,7 +191,7 @@ class _LoginState extends State<Login> {
                         TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                   ),
                 ),
-                const SizedBox(height: 20),
+                // const SizedBox(height: 10),
                 TextFormField(
                   // obscureText: true,
                   validator: validateMobile,
@@ -242,24 +242,29 @@ class _LoginState extends State<Login> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 ),
-                const SizedBox(height: 15),
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  color: const Color.fromRGBO(109, 21, 23, 1),
-                  // textColor: Colors.white,
-                  onPressed: () {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    _submit();
-                  },
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  ),
-                ),
+                const SizedBox(height: 10),
+                Container(
+                    width: double.infinity,
+                    height: 80,
+                    padding: const EdgeInsets.all(10.0),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      color: const Color.fromRGBO(109, 21, 23, 1),
+                      // textColor: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        _submit();
+                        formKey.currentState?.reset();
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                    )),
                 Container(
                     padding: const EdgeInsets.all(10.0),
                     child: InkWell(

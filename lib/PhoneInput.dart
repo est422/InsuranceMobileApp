@@ -63,6 +63,7 @@ class _PhoneInputState extends State<PhoneInput> {
                 // "code": code
               })),
         );
+        _formKey.currentState?.reset();
       }
     } catch (e) {
       throw e;
@@ -127,21 +128,25 @@ class _PhoneInputState extends State<PhoneInput> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 )),
-                const SizedBox(height: 20),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    color: const Color.fromRGBO(109, 21, 23, 1),
-                    // textColor: Colors.white,
-                    onPressed: _submit,
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      ),
-                    )),
+                const SizedBox(height: 10),
+                Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(2.0),
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: const Color.fromRGBO(109, 21, 23, 1),
+                        // textColor: Colors.white,
+                        onPressed: _submit,
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          child: const Text(
+                            'Sign Up',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20.0),
+                          ),
+                        ))),
                 // Container(
                 //     padding: const EdgeInsets.all(10.0),
                 //     child: InkWell(

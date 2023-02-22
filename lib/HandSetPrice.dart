@@ -110,40 +110,45 @@ class _HandSetPriceState extends State<HandSetPrice> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    color: const Color.fromRGBO(109, 21, 23, 1),
-                    // textColor: Colors.white,
-                    onPressed: () {
-                      try {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Register(),
-                                  settings: RouteSettings(arguments: {
-                                    // "firstName": firstName,
-                                    // "lastName": lastName,
-                                    "phone": phone,
-                                    "price": price
-                                    // "email": email,
-                                    // "password": password,
-                                    // "code": code
-                                  })));
-                        }
-                      } catch (e) {
-                        throw e;
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      ),
-                    )),
+                Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(2.0),
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: const Color.fromRGBO(109, 21, 23, 1),
+                        // textColor: Colors.white,
+                        onPressed: () {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Register(),
+                                      settings: RouteSettings(arguments: {
+                                        // "firstName": firstName,
+                                        // "lastName": lastName,
+                                        "phone": phone,
+                                        "price": price
+                                        // "email": email,
+                                        // "password": password,
+                                        // "code": code
+                                      })));
+                            }
+                            _formKey.currentState?.reset();
+                          } catch (e) {
+                            throw e;
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          child: const Text(
+                            'Submit',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20.0),
+                          ),
+                        ))),
               ],
             ),
           ),

@@ -25,7 +25,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final _formKey = GlobalKey<FormState>();
+  final formKeyReg = GlobalKey<FormState>();
   final code = OTP.generateTOTPCodeString(
       'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
   final TextEditingController _firstNameController = TextEditingController();
@@ -96,7 +96,7 @@ class _RegisterState extends State<Register> {
 
   // Future<void> _submit() async {
   //   try {
-  //     if (_formKey.currentState!.validate()) {
+  //     if (formKeyReg.currentState!.validate()) {
   //       final code = OTP.generateTOTPCodeString(
   //           'JBSWY3DPEHPK3PXP', DateTime.now().millisecondsSinceEpoch);
   //       smsNumber.add(phone.toString());
@@ -153,7 +153,7 @@ class _RegisterState extends State<Register> {
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: formKeyReg,
           child: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.center,
@@ -335,83 +335,93 @@ class _RegisterState extends State<Register> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  color: const Color.fromRGBO(109, 21, 23, 1),
-                  // textColor: Colors.white,
-                  onPressed: () async {
-                    try {
-                      if (_formKey.currentState!.validate()) {
-                        // final code = OTP.generateTOTPCodeString(
-                        //     'JBSWY3DPEHPK3PXP',
-                        //     DateTime.now().millisecondsSinceEpoch);
-                        // smsNumber.add(phone.toString());
-                        // String sendResult = await sendSMS(
-                        //         message: code, recipients: smsNumber, sendDirect: true)
-                        //     .catchError((err) {
-                        //   // ignore: avoid_print
-                        //   print(err);
-                        // });
-                        // ignore: avoid_print
-                        // print(sendResult);
-                        setState(() {
-                          isLoading = true;
-                        });
-                        final http.Response response = await http.post(
-                            Uri.parse(
-                                'https://insurancebackendapi-5yi8.onrender.com/api/users/create'),
-                            // 'http://localhost:7000/api/user/create'),
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: jsonEncode(
-                              {
-                                "firstName": firstName,
-                                "lastName": lastName,
-                                // "email": email,
-                                "password": password,
-                                "phone": phone,
-                                "enteredPrice": price
-                              },
-                            ));
-                        if (response.statusCode == 200) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          await storage.write(
-                            key: 'token',
-                            value: jsonDecode(response.body),
-                            iOptions: _getIOSOptions(),
-                            aOptions: _getAndroidOptions(),
-                          );
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ChoosePlan()),
-                          );
-                        } else if (response.statusCode == 400) {
-                          // print(response.body);
+                // const SizedBox(height: 10),
+                Container(
+                    width: double.infinity,
+                    height: 80,
+                    padding: const EdgeInsets.all(10.0),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      color: const Color.fromRGBO(109, 21, 23, 1),
+                      // textColor: Colors.white,
+                      onPressed: () async {
+                        try {
+                          if (formKeyReg.currentState!.validate()) {
+                            // final code = OTP.generateTOTPCodeString(
+                            //     'JBSWY3DPEHPK3PXP',
+                            //     DateTime.now().millisecondsSinceEpoch);
+                            // smsNumber.add(phone.toString());
+                            // String sendResult = await sendSMS(
+                            //         message: code, recipients: smsNumber, sendDirect: true)
+                            //     .catchError((err) {
+                            //   // ignore: avoid_print
+                            //   print(err);
+                            // });
+                            // ignore: avoid_print
+                            // print(sendResult);
+                            setState(() {
+                              isLoading = true;
+                            });
+                            final http.Response response = await http.post(
+                                Uri.parse(
+                                    'https://insurancebackendapi-5yi8.onrender.com/api/users/create'),
+                                // 'http://localhost:7000/api/user/create'),
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: jsonEncode(
+                                  {
+                                    "firstName": firstName,
+                                    "lastName": lastName,
+                                    // "email": email,
+                                    "password": password,
+                                    "phone": phone,
+                                    "enteredPrice": price
+                                  },
+                                ));
+                            if (response.statusCode == 200) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              await storage.write(
+                                key: 'token',
+                                value: jsonDecode(response.body),
+                                iOptions: _getIOSOptions(),
+                                aOptions: _getAndroidOptions(),
+                              );
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChoosePlan()),
+                              );
+                            } else if (response.statusCode == 400) {
+                              // print(response.body);
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChoosePlan()),
+                              );
+                            }
+                          }
+                        } catch (e) {
+                          print(e);
                           setState(() {
                             isLoading = false;
                           });
                         }
-                      }
-                    } catch (e) {
-                      print(e);
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                  },
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  ),
-                ),
+                        formKeyReg.currentState?.reset();
+                      },
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                    )),
                 Container(
                     padding: const EdgeInsets.all(10.0),
                     child: InkWell(
@@ -443,61 +453,6 @@ class _RegisterState extends State<Register> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   decoration: const BoxDecoration(
-      //       color: Colors.white,
-      //       border: Border(
-      //           top: BorderSide(
-      //               color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
-      //   child: BottomNavigationBar(
-      //     type: BottomNavigationBarType.fixed,
-      //     backgroundColor: Colors.white,
-      //     selectedItemColor: Colors.white,
-      //     unselectedItemColor: Colors.white.withOpacity(.60),
-      //     selectedFontSize: 14,
-      //     unselectedFontSize: 14,
-      //     onTap: (index) {
-      //       switch (index) {
-      //         case 0:
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => const MyApp()));
-      //           break;
-      //         case 1:
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => const MyApp()));
-      //           break;
-      //         case 2:
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => const MyApp()));
-      //           break;
-      //         case 3:
-      //           Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                   builder: (context) => const UserProfile()));
-      //           break;
-      //       }
-      //     },
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset41@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset42@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset43@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset40@2x.png'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

@@ -150,7 +150,7 @@ class _SubscribeState extends State<Subscribe> {
                 const SizedBox(height: 10),
                 MaterialButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                     color: const Color.fromRGBO(109, 21, 23, 1),
                     // textColor: Colors.white,
