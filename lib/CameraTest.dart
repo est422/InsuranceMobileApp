@@ -150,10 +150,11 @@ class _CameraTestState extends State<CameraTest> {
           ),
           Container(
               width: double.infinity,
+              height: 70,
               padding: const EdgeInsets.all(10.0),
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 color: const Color.fromRGBO(109, 21, 23, 1),
                 onPressed: (() {
@@ -170,15 +171,16 @@ class _CameraTestState extends State<CameraTest> {
               )),
           checkFrontCamera && checkBackCamera
               ? Container(
-                  width: double.infinity,
-                  height: 50,
+                  // width: double.infinity,
+                  // height: 40,
+                  alignment: Alignment.center,
                   margin: const EdgeInsets.all(5.0),
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    color: const Color.fromRGBO(109, 21, 23, 1),
-                    onPressed: (() {
+                  child: InkWell(
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(12),
+                    // ),
+                    // color: const Color.fromRGBO(109, 21, 23, 1),
+                    onTap: (() {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -187,7 +189,10 @@ class _CameraTestState extends State<CameraTest> {
                     }),
                     child: const Text(
                       'Continue',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      style: TextStyle(
+                          color: Color.fromRGBO(109, 21, 23, 1),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
                     ),
                   ))
               : Container()

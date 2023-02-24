@@ -103,6 +103,12 @@ class _ScreenTestState extends State<ScreenTest> {
       // _timer.cancel();
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }
 }
 
 class CustomScreenPainter extends CustomPainter {
