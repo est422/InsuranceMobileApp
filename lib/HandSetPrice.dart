@@ -60,16 +60,17 @@ class _HandSetPriceState extends State<HandSetPrice> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-            height: 400,
-            alignment: Alignment.center,
+            // margin: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+            padding: const EdgeInsets.all(10.0),
+            height: MediaQuery.of(context).size.height / 1.2,
+            // alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const Icon(
                   Icons.phone_android,
-                  size: 100.0,
+                  size: 150.0,
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
@@ -80,7 +81,11 @@ class _HandSetPriceState extends State<HandSetPrice> {
                       //       "assets/images/testimonials-placeholder.png"),
                       // ),
                       // SizedBox(height: 30),
-                      Text('Enter Handset Actual Price'),
+                      Text('Enter Handset Actual Price',
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20)),
                   // Text('to complete insurance registration'),
                   // SizedBox(height: 30),
                 ),
@@ -109,10 +114,10 @@ class _HandSetPriceState extends State<HandSetPrice> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(2.0),
+                    // padding: const EdgeInsets.all(2.0),
                     child: MaterialButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -136,13 +141,13 @@ class _HandSetPriceState extends State<HandSetPrice> {
                                         // "code": code
                                       })));
                             }
-                            _formKey.currentState?.reset();
                           } catch (e) {
                             throw e;
                           }
+                          _formKey.currentState?.reset();
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(12.0),
                           child: const Text(
                             'Submit',
                             style:
@@ -154,42 +159,6 @@ class _HandSetPriceState extends State<HandSetPrice> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   decoration: const BoxDecoration(
-      //       color: Colors.white,
-      //       border: Border(
-      //           top: BorderSide(
-      //               color: Color.fromRGBO(109, 21, 23, 1), width: 3.0))),
-      //   child: BottomNavigationBar(
-      //     type: BottomNavigationBarType.fixed,
-      //     backgroundColor: Colors.white,
-      //     selectedItemColor: Colors.white,
-      //     unselectedItemColor: Colors.white.withOpacity(.60),
-      //     selectedFontSize: 14,
-      //     unselectedFontSize: 14,
-      //     onTap: (value) {
-      //       // Respond to item press.
-      //     },
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset41@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset42@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset43@2x.png'),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         label: '',
-      //         icon: Image.asset('assets/icons/Asset40@2x.png'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

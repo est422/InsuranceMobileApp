@@ -128,33 +128,45 @@ class _ChoosePlanState extends State<ChoosePlan> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            MaterialButton(
-                color: const Color.fromRGBO(109, 21, 23, 1),
-                onPressed: pickImage,
-                child: const Text("Pick Image from Gallery",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold))),
+            Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(1),
+                width: double.infinity,
+                child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    color: const Color.fromRGBO(109, 21, 23, 1),
+                    onPressed: pickImage,
+                    child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text("Pick Image from Gallery",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))))),
             Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(20.0),
-                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.center,
                   child: const Text(
                     'Available with leading mobile carriers and providers.',
                     style: TextStyle(
                         color: Color.fromARGB(255, 10, 10, 10),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
+                        fontStyle: FontStyle.italic,
                         fontSize: 24.0),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(10.0, 15.0, 0, 0),
-                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.center,
                   child: const Text(
-                    'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below. \n Please choose your suitable payment plan',
+                    'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below. \n\nPlease choose your suitable payment plan',
                     style: TextStyle(
                         color: Color.fromARGB(255, 10, 10, 10),
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.italic,
                         fontSize: 22.0),
                   ),
                 ),
@@ -163,296 +175,342 @@ class _ChoosePlanState extends State<ChoosePlan> {
                   // shape: const Border(
                   // top: BorderSide(width: 20.0, color: Colors.white)),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    // mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: const Text('SELECT YOUR EXCESS ',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w900,
                                 color: Colors.black)),
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: <Widget>[
-                      //     // const Icon(Icons.monetization_on, size: 50.0),
-                      //     MaterialButton(
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(12),
-                      //         ),
-                      //         color: const Color.fromRGBO(109, 21, 23, 1),
-                      //         // textColor: Colors.white,
-                      //         // onPressed: _launchUrl,
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) =>
-                      //                     const TestDevice()),
-                      //           );
-                      //         },
-                      //         child: Row(children: const [
-                      //           Icon(
-                      //             Icons.monetization_on,
-                      //             size: 30.0,
-                      //             color: Colors.white,
-                      //           ),
-                      //           Text(
-                      //             '25',
-                      //             style: TextStyle(
-                      //                 color: Colors.white, fontSize: 20.0),
-                      //           ),
-                      //         ])),
-                      //     const SizedBox(width: 8),
-                      //     MaterialButton(
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(12),
-                      //         ),
-                      //         color: const Color.fromRGBO(109, 21, 23, 1),
-                      //         // textColor: Colors.white,
-                      //         // onPressed: _launchUrl,
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) =>
-                      //                     const TestDevice()),
-                      //           );
-                      //         },
-                      //         child: Row(children: const [
-                      //           Icon(Icons.monetization_on,
-                      //               size: 30.0, color: Colors.white),
-                      //           Text(
-                      //             '50',
-                      //             style: TextStyle(
-                      //                 color: Colors.white, fontSize: 20.0),
-                      //           ),
-                      //         ])),
-                      //   ],
-                      // ),
                       Container(
                         padding: const EdgeInsets.all(10.0),
                         child: const Text('CHOOSE YOUR POLICY TERM ',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w900,
                                 color: Colors.black)),
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: const Text('MONTHLY',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black)),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: const Text('60.00',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black)),
-                                ),
-                                MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  color: const Color.fromRGBO(109, 21, 23, 1),
-                                  // textColor: Colors.white,
-                                  // onPressed: _launchUrl,
-                                  onPressed: () async {
-                                    try {
-                                      setState(() {
-                                        isLoading = true;
-                                        amountSelected = 60;
-                                        selectedPlanType = "Monthly";
-                                      });
-                                      final http.Response response = await http.put(
-                                          Uri.parse(
-                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
-                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
-                                          headers: {
-                                            // 'Content-Type':
-                                            //     'multipart/form-data',
-                                            'Content-Type': 'application/json',
-                                          },
-                                          body: jsonEncode(
-                                            {
-                                              "EnteredAmount": amountSelected,
-                                              "SelectedPlan": selectedPlanType,
-                                              "ImageUrl": ImageUrl
+                            Card(
+                                shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                                shape: const RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color:
+                                            Color.fromARGB(153, 245, 244, 244),
+                                        width: 3),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: const Text('Monthly',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black)),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: const Text('60.00',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black)),
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: MaterialButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            color: const Color.fromRGBO(
+                                                109, 21, 23, 1),
+                                            // textColor: Colors.white,
+                                            // onPressed: _launchUrl,
+                                            onPressed: () async {
+                                              try {
+                                                setState(() {
+                                                  isLoading = true;
+                                                  amountSelected = 60;
+                                                  selectedPlanType = "Monthly";
+                                                });
+                                                final http.Response response =
+                                                    await http.put(
+                                                        Uri.parse(
+                                                            'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                                        // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                                        headers: {
+                                                          // 'Content-Type':
+                                                          //     'multipart/form-data',
+                                                          'Content-Type':
+                                                              'application/json',
+                                                        },
+                                                        body: jsonEncode(
+                                                          {
+                                                            "EnteredAmount":
+                                                                amountSelected,
+                                                            "SelectedPlan":
+                                                                selectedPlanType,
+                                                            "ImageUrl": ImageUrl
+                                                          },
+                                                        ));
+                                                if (response.statusCode ==
+                                                    200) {
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const AgreeToPolicy()),
+                                                  );
+                                                } else if (response
+                                                        .statusCode ==
+                                                    404) {
+                                                  throw Exception(
+                                                      'User edit failed!');
+                                                  // print(response);
+                                                }
+                                              } catch (e) {
+                                                // ignore: avoid_print
+                                                print(e);
+                                              }
                                             },
-                                          ));
-                                      if (response.statusCode == 200) {
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const AgreeToPolicy()),
-                                        );
-                                      } else if (response.statusCode == 404) {
-                                        throw Exception('User edit failed!');
-                                        // print(response);
-                                      }
-                                    } catch (e) {
-                                      // ignore: avoid_print
-                                      print(e);
-                                    }
-                                  },
-                                  child: const Text(
-                                    'Continue',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: const Text('ANNUAL',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black)),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: const Text('120.00',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black)),
-                                ),
-                                MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  color: const Color.fromRGBO(109, 21, 23, 1),
-                                  // textColor: Colors.white,
-                                  // onPressed: _launchUrl,
-                                  onPressed: () async {
-                                    try {
-                                      setState(() {
-                                        isLoading = true;
-                                        amountSelected = 120;
-                                        selectedPlanType = "Annual";
-                                      });
-                                      final http.Response response = await http.put(
-                                          Uri.parse(
-                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
-                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
-                                          headers: {
-                                            // 'Content-Type':
-                                            //     'multipart/form-data',
-                                            'Content-Type': 'application/json',
-                                          },
-                                          body: jsonEncode(
-                                            {
-                                              "EnteredAmount": amountSelected,
-                                              "SelectedPlan": selectedPlanType,
-                                              "ImageUrl": ImageUrl
+                                            child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              // alignment: Alignment.center,
+                                              child: const Text(
+                                                'Continue',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0),
+                                              ),
+                                            ))),
+                                  ],
+                                )),
+                            // const SizedBox(
+                            //   width: 60,
+                            // ),
+                            Card(
+                                shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                                shape: const RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color:
+                                            Color.fromARGB(153, 245, 244, 244),
+                                        width: 3),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: const Text('ANNUAL',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black)),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: const Text('120.00',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black)),
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: MaterialButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            color: const Color.fromRGBO(
+                                                109, 21, 23, 1),
+                                            // textColor: Colors.white,
+                                            // onPressed: _launchUrl,
+                                            onPressed: () async {
+                                              try {
+                                                setState(() {
+                                                  isLoading = true;
+                                                  amountSelected = 120;
+                                                  selectedPlanType = "Annual";
+                                                });
+                                                final http.Response response =
+                                                    await http.put(
+                                                        Uri.parse(
+                                                            'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                                        // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                                        headers: {
+                                                          // 'Content-Type':
+                                                          //     'multipart/form-data',
+                                                          'Content-Type':
+                                                              'application/json',
+                                                        },
+                                                        body: jsonEncode(
+                                                          {
+                                                            "EnteredAmount":
+                                                                amountSelected,
+                                                            "SelectedPlan":
+                                                                selectedPlanType,
+                                                            "ImageUrl": ImageUrl
+                                                          },
+                                                        ));
+                                                if (response.statusCode ==
+                                                    200) {
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const AgreeToPolicy()),
+                                                  );
+                                                } else if (response
+                                                        .statusCode ==
+                                                    404) {
+                                                  throw Exception(
+                                                      'User edit failed!');
+                                                  // print(response);
+                                                }
+                                              } catch (e) {
+                                                // ignore: avoid_print
+                                                print(e);
+                                              }
+                                              // setState(() {
+                                              //   amountSelected = 120;
+                                              //   selectedPlanType = "Annual";
+                                              // });
                                             },
-                                          ));
-                                      if (response.statusCode == 200) {
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const AgreeToPolicy()),
-                                        );
-                                      } else if (response.statusCode == 404) {
-                                        throw Exception('User edit failed!');
-                                        // print(response);
-                                      }
-                                    } catch (e) {
-                                      // ignore: avoid_print
-                                      print(e);
-                                    }
-                                    // setState(() {
-                                    //   amountSelected = 120;
-                                    //   selectedPlanType = "Annual";
-                                    // });
-                                  },
-                                  child: const Text(
-                                    'Continue',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: const Text(
+                                                'Continue',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0),
+                                              ),
+                                            ))),
+                                  ],
+                                )),
                           ]),
                       Container(
                         padding: const EdgeInsets.all(10.0),
                         child: const Text('WHATS COVERED',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.w900,
+                                fontStyle: FontStyle.italic,
                                 color: Colors.black)),
                       ),
-                      Column(
-                        children: [
-                          Row(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.check_circle,
-                                  color: Colors.green,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text('Accidental Damage'),
-                                ),
-                              ]),
-                          Row(children: [
-                            const Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text('Mechanical Breakdown'),
-                            ),
-                          ]),
-                          Row(children: [
-                            const Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text('Malicious Damage'),
-                            ),
-                          ]),
-                          Row(children: [
-                            const Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text('Liquid Damage'),
-                            )
-                          ])
-                        ],
-                      )
+                      Card(
+                          shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                          shape: const RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(153, 245, 244, 244),
+                                  width: 3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Column(
+                            children: [
+                              Row(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15.0, 5.0, 5.0, 5.0),
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: const Text('Accidental Damage',
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20)),
+                                    ),
+                                  ]),
+                              Row(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15.0, 5.0, 5.0, 5.0),
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: const Text('Mechanical Breakdown',
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20)),
+                                    ),
+                                  ]),
+                              Row(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15.0, 5.0, 5.0, 5.0),
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: const Text('Malicious Damage',
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20)),
+                                    ),
+                                  ]),
+                              Row(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15.0, 5.0, 5.0, 5.0),
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: const Text(
+                                        'Liquid Damage',
+                                        style: TextStyle(
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 20),
+                                      ),
+                                    )
+                                  ])
+                            ],
+                          ))
                     ],
                   ),
                 ),

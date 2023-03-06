@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:insurance_app/BottomNavigation.dart';
+import 'package:insurance_app/DeviceStoragesInfo.dart';
 import 'package:insurance_app/ScreenTest.dart';
 import 'package:insurance_app/UserInfo.dart';
 import 'package:insurance_app/UserProfile.dart';
@@ -327,14 +328,14 @@ class _DeviceInfoState extends State<DeviceInfo> {
                           )),
                       Container(
                         alignment: Alignment.center,
-                        width: 300,
+                        width: MediaQuery.of(context).size.width,
                         child: Card(
                           child: Column(
                             children: [
                               Stack(
                                 children: [
                                   SizedBox(
-                                    height: 300,
+                                    height: MediaQuery.of(context).size.height,
                                     child: ListView(
                                       children: _deviceData.keys.map(
                                         (String property) {
@@ -344,10 +345,9 @@ class _DeviceInfoState extends State<DeviceInfo> {
                                             children: <Widget>[
                                               Container(
                                                 padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        40.0, 20.0, 0, 0),
+                                                    const EdgeInsets.all(10),
                                                 child: Text(
-                                                  property,
+                                                  '$property : ',
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                   ),
@@ -356,8 +356,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                                               Expanded(
                                                 child: Container(
                                                   padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          10.0, 20.0, 0.0, 0.0),
+                                                      const EdgeInsets.all(10),
                                                   child: Text(
                                                     '${_deviceData[property]}',
                                                     maxLines: 10,
@@ -374,39 +373,47 @@ class _DeviceInfoState extends State<DeviceInfo> {
                                   ),
                                 ],
                               ),
-                              FutureBuilder(
-                                  future: _getSpace(),
-                                  builder: (context, snapshot) {
-                                    // print(snapshot.error);
-                                    if (snapshot.hasData) {
-                                      return Container(
-                                        alignment: Alignment.centerLeft,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            40.0, 10.0, 0.0, 20.0),
-                                        child: Text(
-                                          'Internal Storage Space: ${snapshot.data} GB',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(
-                                          alignment: Alignment.centerLeft,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              40.0, 10.0, 0.0, 0.0),
-                                          child: const Text(
-                                            "Loading",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ));
-                                    }
-                                  }),
+                              // FutureBuilder(
+                              //     future: _getSpace(),
+                              //     builder: (context, snapshot) {
+                              //       // print(snapshot.error);
+                              //       if (snapshot.hasData) {
+                              //         return Container(
+                              //           alignment: Alignment.centerLeft,
+                              //           padding: const EdgeInsets.all(10),
+                              //           child: Text(
+                              //             'Internal Storage Space: ${snapshot.data} GB',
+                              //             style: const TextStyle(
+                              //               fontWeight: FontWeight.bold,
+                              //             ),
+                              //           ),
+                              //         );
+                              //       } else {
+                              //         return Container(
+                              //             alignment: Alignment.centerLeft,
+                              //             padding: const EdgeInsets.all(10),
+                              //             child: const Text(
+                              //               "Loading",
+                              //               style: TextStyle(
+                              //                 fontWeight: FontWeight.normal,
+                              //               ),
+                              //             ));
+                              //       }
+                              //     }),
                             ],
                           ),
                         ),
                       ),
+                      Container(
+                          padding: const EdgeInsets.all(5),
+                          child: const Text(
+                            'Storage Space Information',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )),
+                      Container(
+                          padding: const EdgeInsets.all(1),
+                          child: const DeviceStoragesInfo()),
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
@@ -486,6 +493,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                               ),
                             )),
                       ),
+                      // const DeviceStoragesInfo(),
                     ],
                   ),
                 ),

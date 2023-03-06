@@ -27,19 +27,18 @@ class _ButtonsTestState extends State<ButtonsTest> with WidgetsBindingObserver {
   // late StreamSubscription<HardwareButtons.LockButtonEvent>
   //     _lockButtonSubscription;
 
-  // Future<void> butnclick() async {
-  //   const volumeBtnChannel = MethodChannel("mychannel");
-  //   volumeBtnChannel.setMethodCallHandler((call) {
-  //     if (call.method == "volumeBtnPressed") {
-  //       if (call.arguments == "volume_down") {
-  //         print("butn ckd $call");
-  //         return Future.value(call);
-  //       }
-  //     }
-
-  //     return Future.value(null);
-  //   });
-  // }
+  Future<void> butnclick() async {
+    const volumeBtnChannel = MethodChannel("mychannel");
+    volumeBtnChannel.setMethodCallHandler((call) {
+      if (call.method == "volumeBtnPressed") {
+        if (call.arguments == "volume_down") {
+          print("butn ckd $call");
+          return Future.value(call);
+        }
+      }
+      return Future.value(null);
+    });
+  }
 
   @override
   void initState() {

@@ -20,7 +20,6 @@ class _ScreenTestState extends State<ScreenTest> {
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    print('suck my dick');
     startPainting();
     // takeScreenShot();
     // endPainting();

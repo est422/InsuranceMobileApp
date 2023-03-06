@@ -127,8 +127,8 @@ class _SubscribeState extends State<Subscribe> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 40.0),
-            height: 400,
+            // margin: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 40.0),
+            height: MediaQuery.of(context).size.height / 1.2,
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -136,10 +136,22 @@ class _SubscribeState extends State<Subscribe> {
               children: <Widget>[
                 const Icon(
                   Icons.mail_outline,
-                  size: 100.0,
+                  size: 150.0,
                 ),
-                const Text('Kindly Send OK to 813'),
-                const Text('complete insurance registration'),
+                Container(
+                    alignment: Alignment.center,
+                    child: const Text('Kindly Send OK to 813',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20))),
+                Container(
+                    alignment: Alignment.center,
+                    child: const Text('to complete insurance registration',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20))),
                 // CircleAvatar(
                 //   backgroundImage: AssetImage(
                 //       "assets/images/testimonials-placeholder.png"),
@@ -147,34 +159,39 @@ class _SubscribeState extends State<Subscribe> {
                 // SizedBox(height: 30),
 
                 // SizedBox(height: 30),
-                const SizedBox(height: 10),
-                MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    color: const Color.fromRGBO(109, 21, 23, 1),
-                    // textColor: Colors.white,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HandSetPrice(),
-                              settings: RouteSettings(arguments: {
-                                // "firstName": firstName,
-                                // "lastName": lastName,
-                                "phone": phone,
-                                // "email": email,
-                                // "password": password,
-                                // "code": code
-                              })));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: const Text(
-                        'Click Here',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      ),
-                    )),
+                // const SizedBox(height: 10),
+                Container(
+                    padding: const EdgeInsets.all(30),
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: const Color.fromRGBO(109, 21, 23, 1),
+                        // textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HandSetPrice(),
+                                  settings: RouteSettings(arguments: {
+                                    // "firstName": firstName,
+                                    // "lastName": lastName,
+                                    "phone": phone,
+                                    // "email": email,
+                                    // "password": password,
+                                    // "code": code
+                                  })));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          // width: double.infinity,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Click Here',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 24.0),
+                          ),
+                        ))),
               ],
             ),
           ),

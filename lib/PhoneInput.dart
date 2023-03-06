@@ -77,6 +77,8 @@ class _PhoneInputState extends State<PhoneInput> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(109, 21, 23, 1),
@@ -87,23 +89,33 @@ class _PhoneInputState extends State<PhoneInput> {
         child: Form(
           key: _formKey,
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             alignment: Alignment.center,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Image(
-                  image: AssetImage("assets/icons/NyalaLogo-1.png"),
+                ClipRect(
+                  child: Image.asset(
+                    "assets/icons/NyalaLogo-1.png",
+                    height: height / 1.7,
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 // SizedBox(height: 5),
                 Container(
-                    // padding: const EdgeInsets.all(10.0),
-                    child:
-                        const Text('Welcome please enter your phone number')),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text(
+                      'Welcome please enter your phone number',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    )),
                 const SizedBox(height: 20),
                 Container(
-                    // padding: const EdgeInsets.all(10.0),
+                    // padding: const EdgeInsets.all(5.0),
                     child: TextFormField(
                   // obscureText: true,
                   validator: validateMobile,
@@ -128,10 +140,10 @@ class _PhoneInputState extends State<PhoneInput> {
                     // errorText: _wrongPassword ? _passwordText : null,
                   ),
                 )),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(2.0),
+                    // padding: const EdgeInsets.all(10.0),
                     child: MaterialButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -140,12 +152,17 @@ class _PhoneInputState extends State<PhoneInput> {
                         // textColor: Colors.white,
                         onPressed: _submit,
                         child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text(
-                            'Sign Up',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                          ),
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
                         ))),
                 // Container(
                 //     padding: const EdgeInsets.all(10.0),

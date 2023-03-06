@@ -147,7 +147,13 @@ class _LoginState extends State<Login> {
             MaterialPageRoute(builder: (context) => const UserInfo()),
           );
         } else {
-          throw Exception('User login failed!');
+          // throw Exception('User login failed!');
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.all(20.0),
+            duration: Duration(seconds: 5),
+            content: Text("Sorry login has failed please try again"),
+          ));
         }
       }
     } catch (e) {
@@ -164,138 +170,148 @@ class _LoginState extends State<Login> {
         iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
         child: Form(
           key: formKey,
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
-                  child: const Text(
-                    'Welcome',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(10),
+                // padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0, 0.0),
+                child: const Text(
+                  'Welcome',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-                // const SizedBox(height: 10),
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
-                  child: const Text(
-                    'Login to your account',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+              ),
+              // const SizedBox(height: 10),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(10),
+                // padding: const EdgeInsets.fromLTRB(20.0, 10.0, 0, 10.0),
+                child: const Text(
+                  'Login to your account',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                // const SizedBox(height: 10),
-                TextFormField(
-                  // obscureText: true,
-                  validator: validateMobile,
-                  controller: _phoneNumberController,
-                  keyboardType: TextInputType.visiblePassword,
-                  onChanged: (value) {
-                    phone = value;
-                  },
-                  // style: TextStyle(backgroundColor: Colors.grey),
-                  decoration: InputDecoration(
-                    fillColor: Colors.grey.shade300,
-                    filled: true,
-                    labelText: 'Mobile',
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30.0),
-                      ),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                // obscureText: true,
+                validator: validateMobile,
+                controller: _phoneNumberController,
+                keyboardType: TextInputType.visiblePassword,
+                onChanged: (value) {
+                  phone = value;
+                },
+                // style: TextStyle(backgroundColor: Colors.grey),
+                decoration: InputDecoration(
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  labelText: 'Mobile',
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
                     ),
-                    // errorText: _wrongPassword ? _passwordText : null,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  obscureText: true,
-                  validator: validatePassword,
-                  controller: _passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: InputDecoration(
-                    fillColor: Colors.grey.shade300,
-                    filled: true,
-                    labelText: 'Password',
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30.0),
-                      ),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
                     ),
-                    // errorText: _wrongPassword ? _passwordText : null,
                   ),
+                  // errorText: _wrongPassword ? _passwordText : null,
                 ),
-                const SizedBox(height: 10),
-                Container(
-                    width: double.infinity,
-                    height: 80,
-                    padding: const EdgeInsets.all(10.0),
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                obscureText: true,
+                validator: validatePassword,
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                onChanged: (value) {
+                  password = value;
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  labelText: 'Password',
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
+                    ),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  // errorText: _wrongPassword ? _passwordText : null,
+                ),
+              ),
+              const SizedBox(height: 15),
+              Container(
+                  width: double.infinity,
+                  // height: 80,
+                  // padding: const EdgeInsets.all(2.0),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    color: const Color.fromRGBO(109, 21, 23, 1),
+                    // textColor: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      _submit();
+                      formKey.currentState?.reset();
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        )),
+                  )),
+              Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                    child: const Text(
+                      'Create an account',
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromRGBO(109, 21, 23, 1)),
+                    ),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PhoneInput(),
+                        )),
+                  )),
+              // Loading
+              // Positioned(
+              isLoading
+                  ? Container(
+                      // color: Colors.white.withOpacity(0.8),
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                            // valueColor: Color.,
+                            ),
                       ),
-                      color: const Color.fromRGBO(109, 21, 23, 1),
-                      // textColor: Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        _submit();
-                        formKey.currentState?.reset();
-                      },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      ),
-                    )),
-                Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      child: const Text(
-                        'Create an account',
-                        style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(109, 21, 23, 1)),
-                      ),
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PhoneInput(),
-                          )),
-                    )),
-                // Loading
-                // Positioned(
-                isLoading
-                    ? Container(
-                        // color: Colors.white.withOpacity(0.8),
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                              // valueColor: Color.,
-                              ),
-                        ),
-                      )
-                    : Container(),
-                // ),
-              ],
-            ),
+                    )
+                  : Container(),
+              // ),
+            ],
           ),
         ),
       ),

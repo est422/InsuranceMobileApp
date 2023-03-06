@@ -44,9 +44,10 @@ class _MobileInfoState extends State<MobileInfo> {
               child: const Text(
                 'Mobile Phone Insurance',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 10, 10, 10),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0),
+                  color: Color.fromARGB(255, 10, 10, 10),
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             Container(
@@ -55,9 +56,10 @@ class _MobileInfoState extends State<MobileInfo> {
               child: const Text(
                 'Phone Insurance',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 10, 10, 10),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.0),
+                  color: Color.fromARGB(255, 10, 10, 10),
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Container(
@@ -66,9 +68,10 @@ class _MobileInfoState extends State<MobileInfo> {
               child: const Text(
                 'Mobile Phone Insurance for Samsung to Iphone and Huawei to OnePlus - and all other brands in between - we cover all the major mobile phone handsets old, new and refurbished. \n To get started please authenticate your phone details',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 10, 10, 10),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 24.0),
+                  color: Color.fromARGB(255, 10, 10, 10),
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Container(
