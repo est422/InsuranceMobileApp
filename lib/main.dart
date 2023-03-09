@@ -97,24 +97,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //       backgroundColor: const Color.fromARGB(255, 252, 251, 251),
-    //       behavior: SnackBarBehavior.floating,
-    //       margin: const EdgeInsets.fromLTRB(20, 0, 20, 200),
-    //       content: Container(
-    //           alignment: Alignment.center,
-    //           width: 200,
-    //           height: 50,
-    //           child: const Text(
-    //             "Swipe left",
-    //             style: TextStyle(
-    //                 color: Color.fromRGBO(109, 21, 23, 1),
-    //                 fontStyle: FontStyle.italic,
-    //                 fontWeight: FontWeight.w900,
-    //                 fontSize: 24),
-    //           ))));
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: const Color.fromARGB(255, 252, 251, 251),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 200),
+          content: Container(
+              alignment: Alignment.center,
+              width: 200,
+              height: 50,
+              child: const Text(
+                "Swipe left",
+                style: TextStyle(
+                    color: Color.fromRGBO(109, 21, 23, 1),
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24),
+              ))));
+    });
     _readAccess();
     // _activePage = selectedPage;
     // _pageController = PageController();

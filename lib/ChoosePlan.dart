@@ -130,7 +130,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
               children: [
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.all(1),
+                padding: const EdgeInsets.all(30),
                 width: double.infinity,
                 child: MaterialButton(
                     shape: RoundedRectangleBorder(
@@ -147,27 +147,47 @@ class _ChoosePlanState extends State<ChoosePlan> {
             Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(10.0),
+                  margin: const EdgeInsets.all(15.0),
                   alignment: Alignment.center,
                   child: const Text(
                     'Available with leading mobile carriers and providers.',
                     style: TextStyle(
                         color: Color.fromARGB(255, 10, 10, 10),
-                        fontWeight: FontWeight.w900,
-                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.normal,
                         fontSize: 24.0),
                   ),
                 ),
+                Card(
+                    shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                    shape: const RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Color.fromARGB(153, 245, 244, 244),
+                            width: 3),
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below.',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 10, 10, 10),
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                      ),
+                    )),
+                const SizedBox(height: 20),
                 Container(
-                  margin: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10),
                   alignment: Alignment.center,
                   child: const Text(
-                    'Looking for the peace of mind that comes with staying connected to your life even when something happens to your phone? Our cell phone insurance plans are available at many carriers and retailers, including those below. \n\nPlease choose your suitable payment plan',
+                    'Please choose your suitable payment plan',
                     style: TextStyle(
                         color: Color.fromARGB(255, 10, 10, 10),
                         fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 22.0),
+                        fontStyle: FontStyle.normal,
+                        fontSize: 20.0),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -182,8 +202,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         child: const Text('SELECT YOUR EXCESS ',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w900,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.black)),
                       ),
                       Container(
@@ -191,8 +211,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         child: const Text('CHOOSE YOUR POLICY TERM ',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w900,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.black)),
                       ),
                       Row(
@@ -215,7 +235,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       child: const Text('Monthly',
                                           style: TextStyle(
                                               fontSize: 20,
-                                              fontStyle: FontStyle.italic,
+                                              fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black)),
                                     ),
@@ -317,7 +337,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       child: const Text('ANNUAL',
                                           style: TextStyle(
                                               fontSize: 20,
-                                              fontStyle: FontStyle.italic,
+                                              fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black)),
                                     ),
@@ -410,7 +430,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
-                                fontStyle: FontStyle.italic,
+                                fontStyle: FontStyle.normal,
                                 color: Colors.black)),
                       ),
                       Card(
@@ -439,7 +459,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: const Text('Accidental Damage',
                                           style: TextStyle(
-                                              fontStyle: FontStyle.italic,
+                                              fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               fontSize: 20)),
                                     ),
@@ -460,7 +480,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: const Text('Mechanical Breakdown',
                                           style: TextStyle(
-                                              fontStyle: FontStyle.italic,
+                                              fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               fontSize: 20)),
                                     ),
@@ -481,7 +501,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: const Text('Malicious Damage',
                                           style: TextStyle(
-                                              fontStyle: FontStyle.italic,
+                                              fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               fontSize: 20)),
                                     ),
@@ -503,7 +523,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       child: const Text(
                                         'Liquid Damage',
                                         style: TextStyle(
-                                            fontStyle: FontStyle.italic,
+                                            fontStyle: FontStyle.normal,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 20),
                                       ),

@@ -276,7 +276,7 @@ class _LoginState extends State<Login> {
                       formKey.currentState?.reset();
                     },
                     child: Container(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(13.0),
                         child: const Text(
                           'Login',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),

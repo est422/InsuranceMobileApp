@@ -151,7 +151,8 @@ class _RegisterState extends State<Register> {
         // iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: const Text('Register'),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+          child: Container(
         padding: const EdgeInsets.all(10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -170,20 +171,23 @@ class _RegisterState extends State<Register> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                          alignment: Alignment.center,
-                          // width: MediaQuery.of(context).size.width / ,
+                          alignment: Alignment.centerLeft,
+                          width: MediaQuery.of(context).size.width / 3,
                           child: const Text('Welcome User \nSign up to join',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20))),
                       // const SizedBox(width: 30),
-                      const CircleAvatar(
-                        backgroundImage: AssetImage(
-                          "assets/images/testimonials-placeholder.png",
-                        ),
-                        radius: 70,
-                      )
+                      Container(
+                          alignment: Alignment.centerRight,
+                          width: MediaQuery.of(context).size.width / 3,
+                          child: const CircleAvatar(
+                            backgroundImage: AssetImage(
+                              "assets/images/testimonials-placeholder.png",
+                            ),
+                            radius: 70,
+                          ))
                     ],
                   )),
               const SizedBox(height: 15),
@@ -438,7 +442,7 @@ class _RegisterState extends State<Register> {
                         formKeyReg.currentState?.reset();
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(13.0),
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -473,7 +477,7 @@ class _RegisterState extends State<Register> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }
