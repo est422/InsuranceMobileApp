@@ -15,17 +15,23 @@ class Policy extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: const Text(
-                'Travel insurance',
-                style: TextStyle(
-                    color: Color.fromRGBO(109, 21, 23, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0),
-              ),
-            ),
+            Card(
+                shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Color.fromARGB(153, 245, 244, 244), width: 3),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Travel insurance',
+                    style: TextStyle(
+                        color: Color.fromRGBO(109, 21, 23, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0),
+                  ),
+                )),
             Card(
               shadowColor: const Color.fromARGB(255, 8, 0, 0),
               shape: const RoundedRectangleBorder(
@@ -43,17 +49,23 @@ class Policy extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                   )),
             ),
-            Container(
-              margin: const EdgeInsets.all(10.0),
-              alignment: Alignment.center,
-              child: const Text(
-                'Life insurance',
-                style: TextStyle(
-                    color: Color.fromRGBO(109, 21, 23, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0),
-              ),
-            ),
+            Card(
+                shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Color.fromARGB(153, 245, 244, 244), width: 3),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Container(
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Life insurance',
+                    style: TextStyle(
+                        color: Color.fromRGBO(109, 21, 23, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0),
+                  ),
+                )),
             Card(
               shadowColor: const Color.fromARGB(255, 8, 0, 0),
               shape: const RoundedRectangleBorder(
@@ -71,17 +83,23 @@ class Policy extends StatelessWidget {
                         fontSize: 20.0),
                   )),
             ),
-            Container(
-              margin: const EdgeInsets.all(10.0),
-              alignment: Alignment.center,
-              child: const Text(
-                'Group insurance',
-                style: TextStyle(
-                    color: Color.fromRGBO(109, 21, 23, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0),
-              ),
-            ),
+            Card(
+                shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Color.fromARGB(153, 245, 244, 244), width: 3),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Container(
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Group insurance',
+                    style: TextStyle(
+                        color: Color.fromRGBO(109, 21, 23, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0),
+                  ),
+                )),
             Card(
               shadowColor: const Color.fromARGB(255, 8, 0, 0),
               shape: const RoundedRectangleBorder(

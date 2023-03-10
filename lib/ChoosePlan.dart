@@ -15,31 +15,7 @@ import 'DrawerNavigationMenu.dart';
 import 'TestDevice.dart';
 import 'UserProfile.dart';
 import 'main.dart';
-
-class User {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String phone;
-  final String email;
-
-  const User(
-      {required this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.email});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      firstName: json['FirstName'],
-      lastName: json['LastName'],
-      phone: json['Phone'],
-      email: json['Email'],
-    );
-  }
-}
+import 'models/User.dart';
 
 class ChoosePlan extends StatefulWidget {
   const ChoosePlan({super.key});
@@ -52,7 +28,7 @@ class ChoosePlan extends StatefulWidget {
 
 class _ChoosePlanState extends State<ChoosePlan> {
   XFile? imageFile;
-  late String ImageUrl;
+  String? imageUrl;
   late int amountSelected;
   late String selectedPlanType;
   late bool isLoading = false;
@@ -60,7 +36,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
   late String? auth;
   late bool isLoggedIn = false;
   late int? userAccountId;
-  Future<User>? profile;
+  late Future<User> profile;
+  late String errorMessage;
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
@@ -101,10 +78,31 @@ class _ChoosePlanState extends State<ChoosePlan> {
       if (imageFile == null) return;
       final imageTemp = XFile(imageFile.path);
       // setState(() => this.imageFile = imageTemp);
-      setState(() => ImageUrl = imageFile.path);
+      setState(() => imageUrl = imageFile.path);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
+  }
+
+  _errorMessage(String erorMessage) {
+    return WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: const Color.fromARGB(255, 252, 251, 251),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 200),
+          content: Container(
+              alignment: Alignment.center,
+              width: 200,
+              height: 50,
+              child: Text(
+                erorMessage,
+                style: const TextStyle(
+                    color: Color.fromRGBO(109, 21, 23, 1),
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24),
+              ))));
+    });
   }
 
   @override
@@ -259,51 +257,86 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                             // textColor: Colors.white,
                                             // onPressed: _launchUrl,
                                             onPressed: () async {
-                                              try {
+                                              if (imageUrl == null) {
                                                 setState(() {
-                                                  isLoading = true;
-                                                  amountSelected = 60;
-                                                  selectedPlanType = "Monthly";
+                                                  errorMessage =
+                                                      "Please select an image";
                                                 });
-                                                final http.Response response =
-                                                    await http.put(
-                                                        Uri.parse(
-                                                            'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
-                                                        // 'https://localhost:7000/api/user/edit/$userAccountId'),
-                                                        headers: {
-                                                          // 'Content-Type':
-                                                          //     'multipart/form-data',
-                                                          'Content-Type':
-                                                              'application/json',
-                                                        },
-                                                        body: jsonEncode(
-                                                          {
-                                                            "EnteredAmount":
-                                                                amountSelected,
-                                                            "SelectedPlan":
-                                                                selectedPlanType,
-                                                            "ImageUrl": ImageUrl
+                                                _errorMessage(errorMessage);
+                                              } else if (imageUrl != null) {
+                                                try {
+                                                  setState(() {
+                                                    isLoading = true;
+                                                    amountSelected = 60;
+                                                    selectedPlanType =
+                                                        "Monthly";
+                                                  });
+                                                  final http.Response response =
+                                                      await http.put(
+                                                          Uri.parse(
+                                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                                          headers: {
+                                                            // 'Content-Type':
+                                                            //     'multipart/form-data',
+                                                            'Content-Type':
+                                                                'application/json',
                                                           },
-                                                        ));
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  // ignore: use_build_context_synchronously
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const AgreeToPolicy()),
-                                                  );
-                                                } else if (response
-                                                        .statusCode ==
-                                                    404) {
-                                                  throw Exception(
-                                                      'User edit failed!');
-                                                  // print(response);
+                                                          body: jsonEncode(
+                                                            {
+                                                              "EnteredAmount":
+                                                                  amountSelected,
+                                                              "SelectedPlan":
+                                                                  selectedPlanType,
+                                                              "ImageUrl":
+                                                                  imageUrl
+                                                            },
+                                                          ));
+                                                  if (response.statusCode ==
+                                                      200) {
+                                                    // ignore: use_build_context_synchronously
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const AgreeToPolicy()),
+                                                    );
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      404) {
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Request failed";
+                                                    });
+                                                    _errorMessage(errorMessage);
+                                                    // print(response);
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      400) {
+                                                    // throw Exception('User login failed!');
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Request failed";
+                                                    });
+                                                    // formKey.currentState?.reset();
+                                                    _errorMessage(errorMessage);
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      500) {
+                                                    // formKey.currentState?.reset();
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Internal server error";
+                                                    });
+                                                    _errorMessage(errorMessage);
+                                                  }
+                                                } catch (e) {
+                                                  // ignore: avoid_print
+                                                  print(e);
                                                 }
-                                              } catch (e) {
-                                                // ignore: avoid_print
-                                                print(e);
                                               }
                                             },
                                             child: Container(
@@ -361,51 +394,85 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                             // textColor: Colors.white,
                                             // onPressed: _launchUrl,
                                             onPressed: () async {
-                                              try {
+                                              if (imageUrl == null) {
                                                 setState(() {
-                                                  isLoading = true;
-                                                  amountSelected = 120;
-                                                  selectedPlanType = "Annual";
+                                                  errorMessage =
+                                                      "Please select an image";
                                                 });
-                                                final http.Response response =
-                                                    await http.put(
-                                                        Uri.parse(
-                                                            'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
-                                                        // 'https://localhost:7000/api/user/edit/$userAccountId'),
-                                                        headers: {
-                                                          // 'Content-Type':
-                                                          //     'multipart/form-data',
-                                                          'Content-Type':
-                                                              'application/json',
-                                                        },
-                                                        body: jsonEncode(
-                                                          {
-                                                            "EnteredAmount":
-                                                                amountSelected,
-                                                            "SelectedPlan":
-                                                                selectedPlanType,
-                                                            "ImageUrl": ImageUrl
+                                                _errorMessage(errorMessage);
+                                              } else if (imageUrl != null) {
+                                                try {
+                                                  setState(() {
+                                                    isLoading = true;
+                                                    amountSelected = 120;
+                                                    selectedPlanType = "Annual";
+                                                  });
+                                                  final http.Response response =
+                                                      await http.put(
+                                                          Uri.parse(
+                                                              'https://insurancebackendapi-5yi8.onrender.com/api/users/user/edit/$userAccountId'),
+                                                          // 'https://localhost:7000/api/user/edit/$userAccountId'),
+                                                          headers: {
+                                                            // 'Content-Type':
+                                                            //     'multipart/form-data',
+                                                            'Content-Type':
+                                                                'application/json',
                                                           },
-                                                        ));
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  // ignore: use_build_context_synchronously
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const AgreeToPolicy()),
-                                                  );
-                                                } else if (response
-                                                        .statusCode ==
-                                                    404) {
-                                                  throw Exception(
-                                                      'User edit failed!');
-                                                  // print(response);
+                                                          body: jsonEncode(
+                                                            {
+                                                              "EnteredAmount":
+                                                                  amountSelected,
+                                                              "SelectedPlan":
+                                                                  selectedPlanType,
+                                                              "ImageUrl":
+                                                                  imageUrl
+                                                            },
+                                                          ));
+                                                  if (response.statusCode ==
+                                                      200) {
+                                                    // ignore: use_build_context_synchronously
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const AgreeToPolicy()),
+                                                    );
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      404) {
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Request failed";
+                                                    });
+                                                    _errorMessage(errorMessage);
+                                                    // print(response);
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      400) {
+                                                    // throw Exception('User login failed!');
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Request failed";
+                                                    });
+                                                    // formKey.currentState?.reset();
+                                                    _errorMessage(errorMessage);
+                                                  } else if (response
+                                                          .statusCode ==
+                                                      500) {
+                                                    // formKey.currentState?.reset();
+                                                    setState(() {
+                                                      isLoading = false;
+                                                      errorMessage =
+                                                          "Internal server error";
+                                                    });
+                                                    _errorMessage(errorMessage);
+                                                  }
+                                                } catch (e) {
+                                                  // ignore: avoid_print
+                                                  print(e);
                                                 }
-                                              } catch (e) {
-                                                // ignore: avoid_print
-                                                print(e);
                                               }
                                               // setState(() {
                                               //   amountSelected = 120;
@@ -424,6 +491,16 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   ],
                                 )),
                           ]),
+                      isLoading
+                          ? Container(
+                              alignment: Alignment.center,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                    // valueColor: Color.,
+                                    ),
+                              ),
+                            )
+                          : Container(),
                       Container(
                         padding: const EdgeInsets.all(10.0),
                         child: const Text('WHATS COVERED',

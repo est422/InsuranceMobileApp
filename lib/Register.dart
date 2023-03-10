@@ -405,10 +405,12 @@ class _RegisterState extends State<Register> {
                                     "enteredPrice": price
                                   },
                                 ));
+                            // print(response.body);
                             if (response.statusCode == 200) {
                               setState(() {
                                 isLoading = false;
                               });
+                              formKeyReg.currentState?.reset();
                               await storage.write(
                                 key: 'token',
                                 value: jsonDecode(response.body),
@@ -423,14 +425,64 @@ class _RegisterState extends State<Register> {
                               );
                             } else if (response.statusCode == 400) {
                               // print(response.body);
+                              // formKeyReg.currentState?.reset();
                               setState(() {
                                 isLoading = false;
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ChoosePlan()),
-                              );
+                              setState(() {
+                                isLoading = false;
+                              });
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 252, 251, 251),
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 200),
+                                        content: Container(
+                                            alignment: Alignment.center,
+                                            width: 200,
+                                            height: 50,
+                                            child: const Text(
+                                              "Unable to create account",
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      109, 21, 23, 1),
+                                                  fontStyle: FontStyle.italic,
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 24),
+                                            ))));
+                              });
+                            } else if (response.statusCode == 500) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              formKeyReg.currentState?.reset();
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 252, 251, 251),
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 200),
+                                        content: Container(
+                                            alignment: Alignment.center,
+                                            width: 200,
+                                            height: 50,
+                                            child: const Text(
+                                              "Internal server error",
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      109, 21, 23, 1),
+                                                  fontStyle: FontStyle.italic,
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 24),
+                                            ))));
+                              });
                             }
                           }
                         } catch (e) {
@@ -442,7 +494,7 @@ class _RegisterState extends State<Register> {
                         formKeyReg.currentState?.reset();
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(13.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),

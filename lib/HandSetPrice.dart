@@ -147,7 +147,7 @@ class _HandSetPriceState extends State<HandSetPrice> {
                           _formKey.currentState?.reset();
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: const Text(
                             'Submit',
                             style:

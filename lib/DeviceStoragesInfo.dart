@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:storage_info/storage_info.dart';
+import 'dart:async';
+import 'package:external_path/external_path.dart';
 import 'package:insurance_app/BottomNavigation.dart';
 import 'package:insurance_app/Category.dart';
 import 'package:insurance_app/ChoosePlan.dart';
@@ -13,70 +16,6 @@ import 'package:insurance_app/MobileInfo.dart';
 import 'package:insurance_app/TestDevice.dart';
 import 'package:insurance_app/main.dart';
 import 'package:insurance_app/models/User.dart';
-
-class User {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String phone;
-  final String? email;
-  final String? device;
-  final String? model;
-  final String? createdAt;
-  final int? handsetCost;
-  final String? handsetId;
-  final int? iMEI1;
-  final int? iMEI2;
-  final String? serialNo;
-  final String? platform;
-  final String? hardWare;
-  final int? enteredAmount;
-  final String? selectedPlan;
-  final String? imageUrl;
-
-  const User(
-      {required this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.email,
-      required this.device,
-      required this.model,
-      required this.createdAt,
-      required this.handsetCost,
-      required this.handsetId,
-      required this.iMEI1,
-      required this.iMEI2,
-      required this.serialNo,
-      required this.platform,
-      required this.hardWare,
-      required this.enteredAmount,
-      required this.selectedPlan,
-      required this.imageUrl});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      firstName: json['FirstName'],
-      lastName: json['LastName'],
-      phone: json['Phone'],
-      email: json['Email'],
-      device: json['Device'],
-      model: json['Model'],
-      createdAt: json['CreatedAt'],
-      handsetCost: json['HandsetCost'],
-      handsetId: json['HandsetId'],
-      iMEI1: json['IMEI1'],
-      iMEI2: json['IMEI2'],
-      serialNo: json['SerialNo'],
-      platform: json['Platform'],
-      hardWare: json['HardWare'],
-      enteredAmount: json['EnteredAmount'],
-      selectedPlan: json['SelectedPlan'],
-      imageUrl: json['ImageUrl'],
-    );
-  }
-}
 
 class DeviceStoragesInfo extends StatefulWidget {
   const DeviceStoragesInfo({super.key});
@@ -94,6 +33,10 @@ class _DeviceStoragesInfoState extends State<DeviceStoragesInfo> {
   late bool isLoggedIn = false;
   late int? userAccountId;
   late double storage;
+  late double? storageSpaceInfo;
+  Future<Directory?>? _externalDocumentsDirectory;
+  List<String> _exPath = [];
+  // Future<List<Directory>?>? _externalStorageDirectories;
 
   // AndroidOptions _getAndroidOptions() => const AndroidOptions(
   //       encryptedSharedPreferences: true,
@@ -146,8 +89,20 @@ class _DeviceStoragesInfoState extends State<DeviceStoragesInfo> {
   @override
   void initState() {
     super.initState();
+    getPath();
     // _readAccess();
     // profile = _getProfile(userAccountId);
+  }
+
+  Future<void> getPath() async {
+    List<String> paths;
+    // getExternalStorageDirectories() will return list containing internal storage directory path
+    // And external storage (SD card) directory path (if exists)
+    paths = await ExternalPath.getExternalStorageDirectories();
+
+    setState(() {
+      _exPath = paths; // [/storage/emulated/0, /storage/B3AE-4D28]
+    });
   }
 
   Future<double> _getInternalStorageSpace() async {
@@ -156,8 +111,12 @@ class _DeviceStoragesInfoState extends State<DeviceStoragesInfo> {
     // return await StorageInfo.getStorageFreeSpaceInGB; // return double
   }
 
-  Future<double> _getExternalStorageSpace() async {
-    return await StorageInfo.getExternalStorageTotalSpaceInGB; // return double
+  Future<double?> _getExternalStorageSpace() async {
+    // storageSpaceInfo = await StorageInfo.getExternalStorageTotalSpaceInGB;
+    if (_externalDocumentsDirectory != null) {
+      return await StorageInfo.getExternalStorageTotalSpaceInGB;
+    }
+    return null; // return double
     // print("StorageInfo: $StorageInfo");
     // return await StorageInfo.getStorageFreeSpaceInGB; // return double
   }
@@ -172,54 +131,72 @@ class _DeviceStoragesInfoState extends State<DeviceStoragesInfo> {
     // final email = user["email"];
 
     return Card(
+        shadowColor: const Color.fromARGB(255, 8, 0, 0),
+        shape: const RoundedRectangleBorder(
+            side:
+                BorderSide(color: Color.fromARGB(153, 245, 244, 244), width: 3),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
         child: Column(children: <Widget>[
-      FutureBuilder(
-          future: _getInternalStorageSpace(),
-          builder: (context, snapshot) {
-            // print(snapshot.error);
-            if (snapshot.hasData) {
-              return Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'Internal Storage Space: ${snapshot.data} GB',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
-            } else {
-              return Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    "Internal Storage Space: Not detected",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
+          FutureBuilder(
+              future: _getInternalStorageSpace(),
+              builder: (context, snapshot) {
+                // print(snapshot.error);
+                if (snapshot.hasData) {
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      'Internal Storage Space: ${snapshot.data} GB',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ));
-            }
-          }),
-      FutureBuilder(
-          future: _getExternalStorageSpace(),
-          builder: (context, snapshot) {
-            // print(snapshot.error);
-            if (snapshot.hasData) {
-              return Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'External Storage Space: ${snapshot.data} GB',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
-            } else {
-              return Container(
+                  );
+                } else {
+                  return Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(10),
+                      child: const Text(
+                        "Internal Storage Space: Not detected",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ));
+                }
+              }),
+          _exPath.isEmpty
+              ? FutureBuilder(
+                  future: _getExternalStorageSpace(),
+                  builder: (context, snapshot) {
+                    // print(snapshot.error);
+                    if (snapshot.hasData) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          'External Storage Space: ${snapshot.data} GB',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.all(10),
+                          child: const Text(
+                            "External Storage Space: Not detected",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ));
+                    }
+                  })
+              : Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.all(10),
                   child: const Text(
@@ -228,9 +205,7 @@ class _DeviceStoragesInfoState extends State<DeviceStoragesInfo> {
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                     ),
-                  ));
-            }
-          })
-    ]));
+                  ))
+        ]));
   }
 }

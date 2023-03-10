@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
             'password': password,
           }),
         );
-        // print(response);
+        // print('response $response');
         if (response.statusCode == 200) {
           setState(() {
             isLoading = false;
@@ -146,14 +146,53 @@ class _LoginState extends State<Login> {
             context,
             MaterialPageRoute(builder: (context) => const UserInfo()),
           );
-        } else {
+        } else if (response.statusCode == 400) {
           // throw Exception('User login failed!');
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.all(20.0),
-            duration: Duration(seconds: 5),
-            content: Text("Sorry login has failed please try again"),
-          ));
+          setState(() {
+            isLoading = false;
+          });
+          formKey.currentState?.reset();
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: const Color.fromARGB(255, 252, 251, 251),
+                behavior: SnackBarBehavior.floating,
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 200),
+                content: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    height: 50,
+                    child: const Text(
+                      "Incorrect Phone or Password",
+                      style: TextStyle(
+                          color: Color.fromRGBO(109, 21, 23, 1),
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 24),
+                    ))));
+          });
+        } else if (response.statusCode == 500) {
+          formKey.currentState?.reset();
+          setState(() {
+            isLoading = false;
+          });
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: const Color.fromARGB(255, 252, 251, 251),
+                behavior: SnackBarBehavior.floating,
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 200),
+                content: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    height: 50,
+                    child: const Text(
+                      "Internal server error",
+                      style: TextStyle(
+                          color: Color.fromRGBO(109, 21, 23, 1),
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 24),
+                    ))));
+          });
         }
       }
     } catch (e) {
@@ -170,7 +209,8 @@ class _LoginState extends State<Login> {
         iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
         title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+          child: Container(
         padding: const EdgeInsets.all(10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -268,15 +308,15 @@ class _LoginState extends State<Login> {
                     ),
                     color: const Color.fromRGBO(109, 21, 23, 1),
                     // textColor: Colors.white,
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         isLoading = true;
                       });
-                      _submit();
+                      await _submit();
                       formKey.currentState?.reset();
                     },
                     child: Container(
-                        padding: const EdgeInsets.all(13.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: const Text(
                           'Login',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -314,7 +354,7 @@ class _LoginState extends State<Login> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

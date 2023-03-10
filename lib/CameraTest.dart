@@ -150,8 +150,9 @@ class _CameraTestState extends State<CameraTest> {
           ),
           Container(
               width: double.infinity,
-              height: 70,
-              padding: const EdgeInsets.all(10.0),
+              // height: 70,
+              // padding: const EdgeInsets.all(10.0),
+              alignment: Alignment.center,
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -164,10 +165,12 @@ class _CameraTestState extends State<CameraTest> {
                   // );
                   _toggleCameraLens();
                 }),
-                child: const Text(
-                  'Toggle Camera',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
+                child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: const Text(
+                      'Toggle Camera',
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    )),
               )),
           checkFrontCamera && checkBackCamera
               ? Container(

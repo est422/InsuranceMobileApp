@@ -16,31 +16,32 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Quotes.dart';
+import 'models/User.dart';
 
-class User {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String phone;
-  final String email;
+// class User {
+//   final int id;
+//   final String firstName;
+//   final String lastName;
+//   final String phone;
+//   final String email;
 
-  const User(
-      {required this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.email});
+//   const User(
+//       {required this.id,
+//       required this.firstName,
+//       required this.lastName,
+//       required this.phone,
+//       required this.email});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      firstName: json['FirstName'],
-      lastName: json['LastName'],
-      phone: json['Phone'],
-      email: json['Email'],
-    );
-  }
-}
+//   factory User.fromJson(Map<String, dynamic> json) {
+//     return User(
+//       id: json['id'],
+//       firstName: json['FirstName'],
+//       lastName: json['LastName'],
+//       phone: json['Phone'],
+//       email: json['Email'],
+//     );
+//   }
+// }
 
 class DeviceInfo extends StatefulWidget {
   const DeviceInfo({super.key});
@@ -71,7 +72,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
   late String? auth;
   late bool isLoggedIn = false;
   late int? userAccountId;
-  Future<User>? profile;
+  late Future<User> profile;
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
@@ -317,25 +318,45 @@ class _DeviceInfoState extends State<DeviceInfo> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Container(
-                          alignment: Alignment.center,
-                          padding:
-                              const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-                          child: const Text(
-                            "Your mobile device can be insured",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          )),
+                      Card(
+                          shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                          shape: const RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(153, 245, 244, 244),
+                                  width: 3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 20.0, 0.0, 20.0),
+                              child: const Text(
+                                "Your mobile device can be insured",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ))),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Container(
                         alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width,
                         child: Card(
+                          shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                          shape: const RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(153, 245, 244, 244),
+                                  width: 3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
                           child: Column(
                             children: [
                               Stack(
                                 children: [
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height,
+                                    // height:
+                                    //     MediaQuery.of(context).size.height / 2,
+                                    height: 350,
                                     child: ListView(
                                       children: _deviceData.keys.map(
                                         (String property) {
@@ -404,24 +425,43 @@ class _DeviceInfoState extends State<DeviceInfo> {
                           ),
                         ),
                       ),
-                      Container(
-                          padding: const EdgeInsets.all(5),
-                          child: const Text(
-                            'Storage Space Information',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Card(
+                          shadowColor: const Color.fromARGB(255, 8, 0, 0),
+                          shape: const RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(153, 245, 244, 244),
+                                  width: 3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Container(
+                              padding: const EdgeInsets.all(20),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Storage Space Information',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ))),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Container(
                           padding: const EdgeInsets.all(1),
                           child: const DeviceStoragesInfo()),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Container(
+                        width: double.infinity,
                         alignment: Alignment.center,
-                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                        // padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
                         // alignment: Alignment.bottomCenter,
-                        margin: const EdgeInsets.all(10),
+                        // margin: const EdgeInsets.all(10),
                         child: MaterialButton(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
                             color: const Color.fromRGBO(109, 21, 23, 1),
                             // textColor: Colors.white,
@@ -485,7 +525,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
                               }
                             },
                             child: Container(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: const Text(
                                 'Verify Your Device Information',
                                 style: TextStyle(
