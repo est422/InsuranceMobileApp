@@ -207,7 +207,7 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Color.fromRGBO(109, 21, 23, 1)),
-        title: Image.asset('assets/images/insurance2.png', fit: BoxFit.cover),
+        title: Image.asset('assets/images/insurance.png', fit: BoxFit.cover),
       ),
       body: SingleChildScrollView(
           child: Container(
